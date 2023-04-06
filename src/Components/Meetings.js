@@ -1,5 +1,7 @@
-export default function Meetings(){
+export default function Meetings({ meetings, role }){
     return (
-        <></>
+        <>
+            {role}
+        </>
     )
 }

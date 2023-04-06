@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 export default function Login(){
     
     const [ email, setEmail ] = useState("")
-    const [ role, setRole ] = useState("")
+    const [ role, setRole ] = useState("student")
     const navigate = useNavigate()
 
     function changeEmail(e){
@@ -19,7 +19,7 @@ export default function Login(){
         e.preventDefault()
         localStorage.setItem("email", email)
         localStorage.setItem("role", role)
-        navigate("/dashboard")
+        navigate("/upcomingMeetings")
     }
 
     return (
