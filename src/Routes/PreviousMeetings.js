@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react"
 import Meetings from "../Components/Meetings"
 import { getPreviousMeetings } from "../apiCalls/apiCalls"
+import Menu from "../Components/Menu"
 
 export default function PreviousMeetings(){
 
     const [ meetings, setMeetings ] = useState([])
 
     async function getPreviousMeetingsList(){
-        await getPreviousMeetings(localStorage.getItem("email"), localStorage.getItem("role"))
+        const response = await getPreviousMeetings(localStorage.getItem("email"), localStorage.getItem("role"))
+        setMeetings(response.meetings)
     }
 
     useEffect(() => {
@@ -16,7 +18,8 @@ export default function PreviousMeetings(){
 
     return (
         <>
-            <Meetings meetings={meetings} role={localStorage.getItem("role")} />
+            <Menu />
+            <Meetings meetings={meetings} />
         </>
     )
 }

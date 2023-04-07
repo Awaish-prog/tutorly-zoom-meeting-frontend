@@ -26,7 +26,7 @@ export default function Login(){
         <>
             <form onSubmit={login}>
                 <label>Email: </label>
-                <input type="email" value={email} onChange={changeEmail} />
+                <input type="email" value={email} onChange={changeEmail} required />
                 <label>Role: </label>
                 <select value={role} onChange={changeRole}>
                     <option value="student">Student</option>
