@@ -19,7 +19,7 @@ export default function UpcomingMeetings(){
     return (
         <>
             <Menu />
-            <Meetings meetings={meetings} />
+            <Meetings meetings={meetings} role={localStorage.getItem("role")} previous={false} />
         </>
     )
 }

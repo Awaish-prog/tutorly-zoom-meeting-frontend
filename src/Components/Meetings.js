@@ -1,30 +1,24 @@
-export default function Meetings({ meetings }){
+import { useNavigate } from "react-router-dom"
+
+export default function Meetings({ meetings, role, previous }){
+
+    const navigate = useNavigate()
+
+    function gotoMeetingDetails(meeting){
+        navigate("/meetingDetails", { state : { meeting, role } })
+    }
+
     return (
         <>
-            <table>
-                <thead>
-                    <tr>
-                    <th>Tutor Name</th>
-                    <th>Student Name</th>
-                    <th>Title</th>
-                    <th>Date and Time</th>
-                    <th>Meeting Link</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        meetings.map((meeting, index) => {
-                            return <tr key={index}>
-                                <td>{meeting.calendar}</td>
-                                <td>{`${meeting.firstName} ${meeting.lastName}`}</td>
-                                <td>{meeting.type}</td>
-                                <td>{`${meeting.date} ${meeting.time}`}</td>
-                                <td>Link</td>
-                            </tr>
-                        })
-                    }
-                </tbody>
-            </table>
+            {previous ? <h1>Previous Meetings</h1> : <h1>Upcoming Meetings</h1>}
+            {
+                meetings.map((meeting, index) => {
+                    return <div key={index} onClick = {() => gotoMeetingDetails(meeting)}>
+                        <p>Title: {meeting.type}</p>
+                        <p>Date-time: {`${meeting.date} ${meeting.time}`}</p>
+                    </div>
+                })
+            }
         </>
     )
 }
