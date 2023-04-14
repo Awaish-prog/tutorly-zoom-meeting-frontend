@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Meetings from "../Components/Meetings"
 import { getPreviousMeetings } from "../apiCalls/apiCalls"
 import Menu from "../Components/Menu"
+import "../CSS/Meetings.css"
 
 export default function PreviousMeetings(){
 
@@ -17,9 +18,9 @@ export default function PreviousMeetings(){
     }, [])
 
     return (
-        <>
+        <div className="meetings">
             <Menu />
             <Meetings meetings={meetings} role={localStorage.getItem("role")} previous={true} />
-        </>
+        </div>
     )
 }

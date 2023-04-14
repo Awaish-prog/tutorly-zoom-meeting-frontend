@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
+import "../CSS/Meetings.css"
+
 
 export default function Meetings({ meetings, role, previous }){
 
@@ -16,8 +18,10 @@ export default function Meetings({ meetings, role, previous }){
     }
 
     return (
-        <>
+        <div className="meetings-list-container">
             {previous ? <h1>Previous Meetings</h1> : <h1>Upcoming Meetings</h1>}
+            <div className="select-timezone">
+            <label>Select Timezone: </label>
             <select onChange={changeTimeZone}>
                 {
                     timeZones.map((timeZone, index) => {
@@ -25,14 +29,17 @@ export default function Meetings({ meetings, role, previous }){
                     })
                 }
             </select>
+            </div>
+            <div className="meetings-list">
             {
                 meetings.map((meeting, index) => {
-                    return <div key={index} onClick = {() => gotoMeetingDetails(meeting)}>
-                        <p>Title: {meeting.type}</p>
-                        <p>Date-time: {new Date(meeting.datetime).toLocaleString('en-US', timeZone)}</p>
+                    return <div key={index} onClick = {() => gotoMeetingDetails(meeting)} className="meeting">
+                        <p>{meeting.type}</p>
+                        <p>{new Date(meeting.datetime).toLocaleString('en-US', timeZone)}</p>
                     </div>
                 })
             }
-        </>
+            </div>
+        </div>
     )
 }
