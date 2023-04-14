@@ -11,8 +11,34 @@ async function getUpcomingMeetings(email, role){
 }
 
 async function getAvailability(date, apId){
-    console.log(apId);
     const response = await fetch(`${url}getAvailabilty?date=${date}&appointmentTypeID=${apId}`)
+    return await response.json()
 }
 
-export { getPreviousMeetings, getUpcomingMeetings, getAvailability }
+async function rescheduleMeetingWithTime(datetime, id){
+    const response = await fetch(`${url}rescheduleMeeting`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body : JSON.stringify({
+            datetime, id
+        })
+    })
+    return await response.json()
+}
+
+async function cancelAppointmentWithId(id){
+    const response = await fetch(`${url}cancelMeeting`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body : JSON.stringify({
+            id
+        })
+    })
+    return await response.json()
+}
+
+export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId }
