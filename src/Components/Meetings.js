@@ -10,7 +10,7 @@ export default function Meetings({ meetings, role, previous }){
     const [ timeZone, setTimeZone ] = useState({ timeZone: 'PST' })
 
     function gotoMeetingDetails(meeting){
-        navigate("/meetingDetails", { state : { meeting, role, timeZone } })
+        navigate("/meetingDetails", { state : { meeting, role, timeZone, previous } })
     }
 
     function changeTimeZone(e){

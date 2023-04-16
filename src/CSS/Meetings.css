@@ -1,35 +1,46 @@
+:root {
+    --yellow: #FFC701;
+    --blue: #1718F1;
+    --black: #000000;
+}
+
 .meetings {
     display: flex;
 }
 .menu {
     width: 300px;
+    min-height: 100vh;
 }
 h1 {
-    text-align: center;
     font-size: 2.5rem;
 }
 .meetings-list-container {
     width: 100%;
     font-size: 1.2rem;
+    margin-left: 50px;
 }
 .meeting {
-    background-color: yellow;
+    border: 2px solid var(--blue);
+    color: var(--black);
     width: 280px;
     padding: 10px;
     margin: 5px;
     cursor: pointer;
     border-radius: 10px;
+    font-weight: bold;
 }
 .meeting:hover{
-    outline: 5px solid blue;
-    background-color: blue;
+    outline: 5px solid var(--blue);
+    background-color: var(--blue);
+    color: var(--yellow);
 }
 .meetings-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
+    column-gap: 20px;
 }
 .select-timezone {
-    margin: 20px;
     font-size: 1.3rem;
+    margin: 20px 0;
 }
