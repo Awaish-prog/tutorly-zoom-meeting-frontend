@@ -19,7 +19,7 @@ export default function Login(){
         e.preventDefault()
         localStorage.setItem("email", email)
         localStorage.setItem("role", role)
-        navigate("/upcomingMeetings")
+        navigate("/dashboard")
     }
 
     return (

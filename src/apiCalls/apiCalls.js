@@ -41,4 +41,9 @@ async function cancelAppointmentWithId(id){
     return await response.json()
 }
 
-export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId }
+async function getDashboardDatafromServer(email){
+    const response = await fetch(`${url}getDashboardData/${email}`)
+    return await response.json()
+}
+
+export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId, getDashboardDatafromServer }
