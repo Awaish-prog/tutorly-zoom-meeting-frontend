@@ -8,19 +8,20 @@
     list-style: none;
     padding: 0;
 }
-.menu-options > li {
+.menu-options > .link > li {
     margin: 10px 0;
     font-weight: bold;
     font-size: 1.3rem;
     margin: 10px 0;
     padding: 10px;
 }
-.menu-options > li:hover {
+.menu-options > .link > li:hover {
     background-color: var(--blue);
 }
 .link {
     color: var(--black);
     text-decoration: none;
+    width: 100%;
 }
 .link:hover {
     color: white;

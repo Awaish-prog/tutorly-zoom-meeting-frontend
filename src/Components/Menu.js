@@ -11,9 +11,9 @@ export default function Menu(){
                 <img src = {tutorlyLogo} alt="Logo" width="200px" />
             </div>
             <ul className="menu-options">
-                <li><Link className="link" to="/dashboard">Dashboard</Link></li>
-                <li><Link className="link" to="/previousMeetings">Previous Meetings</Link></li>
-                <li><Link className="link" to="/upcomingMeetings">Upcoming Meetings</Link></li>
+                <Link className="link" to="/dashboard"><li>Dashboard</li></Link>
+                <Link className="link" to="/previousMeetings"><li>Previous Meetings</li></Link>
+                <Link className="link" to="/upcomingMeetings"><li>Upcoming Meetings</li></Link>
             </ul>
         </div>
     )

@@ -46,4 +46,17 @@ async function getDashboardDatafromServer(email){
     return await response.json()
 }
 
-export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId, getDashboardDatafromServer }
+async function loginUser(email, role){
+    const response = await fetch(`${url}login`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body : JSON.stringify({
+            email, role
+        })
+    })
+    return await response.json()
+}
+
+export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId, getDashboardDatafromServer, loginUser }

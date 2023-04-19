@@ -1,4 +1,16 @@
+@font-face {
+    font-family: "Neue Montreal";
+    src: url("../fonts/_NeueMontreal-Regular.otf");
+}
+@font-face {
+    font-family: "PPWoodland";
+    src: url("../fonts/_PPWoodland-Regular.otf");
+}
+
 html, body {
     margin: 0;
     background-color: #fff;
+    font-family: "Neue Montreal", sans-serif;
 }
+  
+  

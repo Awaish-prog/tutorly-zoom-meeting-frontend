@@ -2,15 +2,20 @@ import { useEffect, useState } from "react";
 import Menu from "../Components/Menu";
 import "../CSS/Dashboard.css"
 import { getDashboardDatafromServer } from "../apiCalls/apiCalls";
+import callUs from "../Images/callUs.png"
+import folder from "../Images/folder.png"
+import joinSession from "../Images/joinSession.png"
+import keyTakeaways from "../Images/keyTakeaways.png"
+import doc from "../Images/doc.png"
 
 function Dashboard(){
     
-    const [ dashboardData, setDashboardData ] = useState([])
+    const [ dashboardData, setDashboardData ] = useState("")
 
     async function getDashboardData(){
       const email = localStorage.getItem("email")
       const dashboardData = await getDashboardDatafromServer(email)
-      dashboardData.status === 200 && setDashboardData(dashboardData.dashboardData)
+      dashboardData.status === 200 && setDashboardData(dashboardData)
     }
     
       
@@ -22,7 +27,60 @@ function Dashboard(){
 
     return <div className="dashboard">
         <Menu />
-        <h1>Welcome</h1>
+        {
+            dashboardData !== "" && <div className="dashboard-container"><h1>Welcome, {dashboardData.dashboardData[0]}</h1>
+            <div className="dashboard-content">
+            <div className="key-takeaways">
+
+            <div className="dashboard-options">
+            <img className="dashboard-logos" src={keyTakeaways} alt="key takeaways" />
+            <p>View Your Key Takeaways</p>
+            </div>
+
+            {
+                dashboardData.files.map((file, index) => {
+                    return  file.name.toLowerCase().includes("key") && <a className="dashboard-links" key={index} href={`https://docs.google.com/document/d/${file.id}`} target="_blank">
+                        <div className="dashboard-options">
+                        <img className="dashboard-logos" src={doc} alt="doc" />
+                        <p>{file.name}</p>
+                        </div></a>
+                })
+            }
+            </div>
+
+            <div className="session-details">
+
+            <div className="dashboard-options">
+            <img className="dashboard-logos" src={joinSession} alt="join session" />
+            <p>Join Your Session: <a className="dashboard-links" href={dashboardData.dashboardData[46]} target="_blank">Zoom Link</a></p>
+            </div>
+            <div className="dashboard-options">
+            <img className="dashboard-logos" src={callUs} alt="call us" />
+            <p>Message the Tutorly Team or Your Tutor: <a className="dashboard-links" href="tel:19478887044">(947) 888-7044</a></p>
+            </div>
+
+            <div className="dashboard-options">
+            <img className="dashboard-logos" src={folder} alt="folder" />
+            <p><a className="dashboard-links" href={`https://drive.google.com/drive/folders/${dashboardData.dashboardData[4]}`} target="_blank">Homework Folder</a></p>
+            </div>
+
+            <ul>
+                <li>Remember to upload homework before each session by texting (947) 888-7044!</li>
+            </ul>
+
+            <div className="dashboard-options">
+            <img className="dashboard-logos" src={folder} alt="folder" />
+            <p><a className="dashboard-links" href={`https://drive.google.com/drive/folders/${dashboardData.dashboardData[44]}`}  target="_blank">Resources Folder</a></p>
+            </div>
+
+            <div className="dashboard-options">
+            <img className="dashboard-logos" src={folder} alt="folder" />
+            <p><a className="dashboard-links" href={`https://drive.google.com/drive/folders/${dashboardData.dashboardData[15]}`}  target="_blank">Session Recordings</a></p>
+            </div>
+            </div>
+            </div>
+            </div>
+        }
         
     </div>
 }
