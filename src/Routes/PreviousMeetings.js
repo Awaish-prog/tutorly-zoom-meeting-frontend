@@ -8,13 +8,20 @@ export default function PreviousMeetings(){
 
     const [ meetings, setMeetings ] = useState([])
 
-    async function getPreviousMeetingsList(){
-        const response = await getPreviousMeetings(localStorage.getItem("email"), localStorage.getItem("role"))
+    async function getPreviousMeetingsList(number){
+        const response = await getPreviousMeetings(localStorage.getItem("email"), localStorage.getItem("role"), number)
         setMeetings(response.meetings)
+        
     }
 
     useEffect(() => {
-        getPreviousMeetingsList()
+        if(meetings.length >= 50){
+            getPreviousMeetingsList(2147483647)
+        }
+    }, [meetings])
+
+    useEffect(() => {
+        getPreviousMeetingsList(50)
     }, [])
 
     return (

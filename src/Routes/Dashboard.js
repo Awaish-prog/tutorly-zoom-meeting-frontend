@@ -51,10 +51,6 @@ function Dashboard(){
             <div className="session-details">
 
             <div className="dashboard-options">
-            <img className="dashboard-logos" src={joinSession} alt="join session" />
-            <p>Join Your Session: <a className="dashboard-links" href={dashboardData.dashboardData[46]} target="_blank">Zoom Link</a></p>
-            </div>
-            <div className="dashboard-options">
             <img className="dashboard-logos" src={callUs} alt="call us" />
             <p>Message the Tutorly Team or Your Tutor: <a className="dashboard-links" href="tel:19478887044">(947) 888-7044</a></p>
             </div>
@@ -64,9 +60,6 @@ function Dashboard(){
             <p><a className="dashboard-links" href={`https://drive.google.com/drive/folders/${dashboardData.dashboardData[4]}`} target="_blank">Homework Folder</a></p>
             </div>
 
-            <ul>
-                <li>Remember to upload homework before each session by texting (947) 888-7044!</li>
-            </ul>
 
             <div className="dashboard-options">
             <img className="dashboard-logos" src={folder} alt="folder" />
@@ -77,6 +70,9 @@ function Dashboard(){
             <img className="dashboard-logos" src={folder} alt="folder" />
             <p><a className="dashboard-links" href={`https://drive.google.com/drive/folders/${dashboardData.dashboardData[15]}`}  target="_blank">Session Recordings</a></p>
             </div>
+            <ul>
+                <li>Remember to upload homework before each session by texting (947) 888-7044!</li>
+            </ul>
             </div>
             </div>
             </div>

@@ -9,13 +9,21 @@ export default function UpcomingMeetings(){
     
     const [ meetings, setMeetings ] = useState([])
 
-    async function getUpcomingMeetingsList(){
-        const response = await getUpcomingMeetings(localStorage.getItem("email"), localStorage.getItem("role"))
+    async function getUpcomingMeetingsList(number){
+        const response = await getUpcomingMeetings(localStorage.getItem("email"), localStorage.getItem("role"), number)
         setMeetings(response.meetings)
     }
 
+
+
+    // useEffect(() => {
+    //     if(meetings.length >= 50){
+    //         getUpcomingMeetingsList(2147483647)
+    //     }
+    // }, [meetings])
+
     useEffect(() => {
-        getUpcomingMeetingsList()
+        getUpcomingMeetingsList(50)
     }, [])
 
     return (

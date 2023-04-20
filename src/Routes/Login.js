@@ -21,7 +21,7 @@ export default function Login(){
         e.preventDefault()
         localStorage.setItem("email", email)
         localStorage.setItem("role", role)
-        const response = await loginUser(email, role)
+        //const response = await loginUser(email, role)
         navigate("/dashboard")
     }
 
