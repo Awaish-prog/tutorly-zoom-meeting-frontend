@@ -1,12 +1,12 @@
 const url = "http://localhost:4005/"
 
-async function getPreviousMeetings(email, role, number){
-    const response = await fetch(`${url}getPreviousMeetings/${email}/${role}/${number}`)
+async function getPreviousMeetings(email, role, number, limit){
+    const response = await fetch(`${url}getPreviousMeetings/${email}/${role}/${number}/${limit}`)
     return await response.json()
 }
 
-async function getUpcomingMeetings(email, role, number){
-    const response = await fetch(`${url}getUpcomingMeetings/${email}/${role}/${number}`)
+async function getUpcomingMeetings(email, role, number, limit){
+    const response = await fetch(`${url}getUpcomingMeetings/${email}/${role}/${number}/${limit}`)
     return await response.json()
 }
 
