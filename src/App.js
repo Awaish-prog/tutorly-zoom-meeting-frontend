@@ -4,6 +4,7 @@ import UpcomingMeetings from "./Routes/UpcomingMeetings";
 import PreviousMeetings from "./Routes/PreviousMeetings";
 import MeetingDeatils from "./Routes/MeetingDetails";
 import Dashboard from "./Routes/Dashboard";
+import CheckStudentId from "./Routes/CheckStudentId";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/upcomingMeetings" element = {<UpcomingMeetings />} />
       <Route path="/previousMeetings" element = {<PreviousMeetings />} />
       <Route path="/meetingDetails" element = {<MeetingDeatils />} />
+      <Route path="/checkStudentId" element = {<CheckStudentId />} />
     </Routes>
   );
 }

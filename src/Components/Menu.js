@@ -14,6 +14,7 @@ export default function Menu(){
                 <Link className="link" to="/dashboard"><li>Dashboard</li></Link>
                 <Link className="link" to="/previousMeetings"><li>Previous Meetings</li></Link>
                 <Link className="link" to="/upcomingMeetings"><li>Upcoming Meetings</li></Link>
+                <Link className="link" to="/checkStudentId"><li>Check Student Id</li></Link>
             </ul>
         </div>
     )
