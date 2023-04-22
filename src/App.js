@@ -14,7 +14,7 @@ function App() {
       <Route path="/upcomingMeetings" element = {<UpcomingMeetings />} />
       <Route path="/previousMeetings" element = {<PreviousMeetings />} />
       <Route path="/meetingDetails" element = {<MeetingDeatils />} />
-      <Route path="/checkStudentId" element = {<CheckStudentId />} />
+      <Route path="/checkLoginId" element = {<CheckStudentId />} />
     </Routes>
   );
 }

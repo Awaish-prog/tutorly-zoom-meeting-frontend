@@ -7,6 +7,7 @@ export default function Login(){
     
     const [ email, setEmail ] = useState("")
     const [ role, setRole ] = useState("student")
+    const [ id, setId ] = useState("")
     const navigate = useNavigate()
 
     function changeEmail(e){
@@ -17,12 +18,17 @@ export default function Login(){
         setRole(e.target.value)
     }
 
+    function changeId(e){
+        setId(e.target.value)
+    }
+
     async function login(e){
         e.preventDefault()
-        localStorage.setItem("email", email)
+        localStorage.setItem("email", email.toLowerCase())
         localStorage.setItem("role", role)
-        //const response = await loginUser(email, role)
-        navigate("/dashboard")
+        const response = await loginUser(email.toLowerCase(), role, id)
+        localStorage.setItem("token", response.token)
+        response.status === 200 ? navigate("/dashboard") : response.status === 400 ? console.log("wrong password") : console.log("User not present");
     }
 
     return (
@@ -32,6 +38,10 @@ export default function Login(){
                 <div className="login-input-div">
                 <label>Email:</label>
                 <input className="login-input" type="email" value={email} onChange={changeEmail} required />
+                </div>
+                <div className="login-input-div">
+                <label>Id:</label>
+                <input className="login-input" type="text" value={id} onChange={changeId} required />
                 </div>
                 <div className="login-input-div">
                 <label>Role:</label>

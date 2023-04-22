@@ -4,7 +4,6 @@ import "../CSS/Dashboard.css"
 import { getDashboardDatafromServer, getPreviousMeetings, getUpcomingMeetings } from "../apiCalls/apiCalls";
 import callUs from "../Images/callUs.png"
 import folder from "../Images/folder.png"
-import joinSession from "../Images/joinSession.png"
 import keyTakeaways from "../Images/keyTakeaways.png"
 import doc from "../Images/doc.png"
 import Meeting from "../Components/Meeting";
@@ -20,10 +19,6 @@ function Dashboard(){
         const email = localStorage.getItem("email")
         const dashboardData = await getDashboardDatafromServer(email)
         dashboardData.status === 200 && setDashboardData(dashboardData)
-        const response1 = await getPreviousMeetings(localStorage.getItem("email"), localStorage.getItem("role"), 20, 2)
-        setDashboardPreviousMeetings(response1.meetings)
-        const response2 = await getUpcomingMeetings(localStorage.getItem("email"), localStorage.getItem("role"), 20, 2)
-        setDashboardUpcomingMeetings(response2.meetings)
     }
     
       

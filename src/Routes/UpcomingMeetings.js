@@ -10,9 +10,9 @@ export default function UpcomingMeetings(){
     const [ meetings, setMeetings ] = useState([])
 
     async function getUpcomingMeetingsList(){
-        const response1 = await getUpcomingMeetings(localStorage.getItem("email"), localStorage.getItem("role"), 50, 2147483647)
+        const response1 = await getUpcomingMeetings(localStorage.getItem("email"), localStorage.getItem("role"), 50)
         setMeetings(response1.meetings)
-        const response2 = await getUpcomingMeetings(localStorage.getItem("email"), localStorage.getItem("role"), 2147483647, 2147483647)
+        const response2 = await getUpcomingMeetings(localStorage.getItem("email"), localStorage.getItem("role"), 2147483647)
         setMeetings(response2.meetings)
     }
     

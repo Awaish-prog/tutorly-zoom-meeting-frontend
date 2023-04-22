@@ -1,6 +1,9 @@
 import { useState } from "react"
 import Menu from "../Components/Menu"
 import crypto from 'crypto-js'
+import "../CSS/Dashboard.css"
+import "../CSS/Login.css"
+
 
 export default function CheckStudentId(){
 
@@ -16,19 +19,23 @@ export default function CheckStudentId(){
 
 
     return (
-        <>
+        <div className="dashboard">
             <Menu />
-            <div>
+            <div className="dashboard-container">
+                <h1>View Login Id</h1>
+
                 {
                     id && <p>{id}</p>
                 }
 
-                <form onSubmit={calculateId}>
+                <form className="login-form" onSubmit={calculateId}>
+                    <div className="login-input-div">
                     <label>Email: </label>
-                    <input type="email" onChange={(e) => setStudentEmail(e.target.value)} value={studentEmail} />
-                    <input type="submit" />
+                    <input className="login-input" type="email" onChange={(e) => setStudentEmail(e.target.value)} value={studentEmail} />
+                    </div>
+                    <input className="submit-login" type="submit" />
                 </form>
             </div>
-        </>
+        </div>
     )
 }

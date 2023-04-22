@@ -5,6 +5,9 @@ import "../CSS/Menu.css"
 
 
 export default function Menu(){
+
+    const email = localStorage.getItem("email")
+
     return (
         <div className="menu">
             <div className="logo-div">
@@ -14,7 +17,11 @@ export default function Menu(){
                 <Link className="link" to="/dashboard"><li>Dashboard</li></Link>
                 <Link className="link" to="/previousMeetings"><li>Previous Meetings</li></Link>
                 <Link className="link" to="/upcomingMeetings"><li>Upcoming Meetings</li></Link>
-                <Link className="link" to="/checkStudentId"><li>Check Student Id</li></Link>
+                {
+                    (email === "awaish@tutorly.com" ||
+                    email === "awaish@mytutorly.com") &&
+                    <Link className="link" to="/checkLoginId"><li>Check Login Id</li></Link>
+                }
             </ul>
         </div>
     )
