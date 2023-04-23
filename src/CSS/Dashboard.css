@@ -17,7 +17,13 @@
     flex-wrap: wrap;
 }
 .key-takeaways, .session-details {
-    width: 350px;
+    width: 330px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.dashboard-container > h1 {
+    margin: 10px;
 }
 .dashboard-logos {
     width: 20px;
@@ -37,8 +43,17 @@
 .dashboard-links {
     color: rgb(95, 94, 94);
     text-decoration: none;
+    width: fit-content;
 }
 .dashboard-links:hover {
     color: rgb(58, 57, 57);
     text-decoration: underline;
+}
+@media screen and (max-width: 850px) {
+    .dashboard-options {
+        width: 230px;
+    }
+    .dashboard-container > h1 {
+        font-size: 1.7rem;
+    }
 }
