@@ -36,3 +36,19 @@
 .meeting-links:hover {
     background-color: white;
 }
+.error-message {
+    text-align: center;
+    font-size: 1.2rem;
+    color: rgb(221, 25, 25)
+}
+@media screen and (max-width: 850px) {
+    .meeting-details {
+        width: 85%;
+    }
+    .meeting-actions {
+        width: 85%;
+    }
+    .meeting-heading {
+        font-size: 1.4rem;
+    }
+}

@@ -1,14 +1,16 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Menu from "../Components/Menu"
 import crypto from 'crypto-js'
 import "../CSS/Dashboard.css"
 import "../CSS/Login.css"
+import { useNavigate } from "react-router-dom"
 
 
 export default function CheckStudentId(){
 
     const [ studentEmail, setStudentEmail ] = useState("")
     const [ id, setId ] = useState("")
+    const navigate = useNavigate()
 
     function calculateId(e){
         e.preventDefault()
@@ -17,6 +19,11 @@ export default function CheckStudentId(){
         setId(hash.substring(0, 10));
     }
 
+    useEffect(() => {
+        if(!localStorage.getItem("email")){
+            navigate("/", { replace: true })
+        }
+    }, [])
 
     return (
         <div className="dashboard">

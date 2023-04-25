@@ -7,31 +7,49 @@ import folder from "../Images/folder.png"
 import keyTakeaways from "../Images/keyTakeaways.png"
 import doc from "../Images/doc.png"
 import Meeting from "../Components/Meeting";
+import Loader from "../Components/Loader";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard(){
     
     const [ dashboardData, setDashboardData ] = useState("")
-    const role = localStorage.getItem("role")
     const [ dashboardUpcomingMeetings, setDashboardUpcomingMeetings ] = useState([])
     const [ dashboardPreviousMeetings, setDashboardPreviousMeetings ] = useState([])
+    const [ showLoader, setShowLoader ] = useState(true)
+    const navigate = useNavigate()
+    const role = localStorage.getItem("role")
+
 
     async function getDashboardData(){
+        if(role === "tutor"){
+            return
+        }
         const email = localStorage.getItem("email")
         const dashboardData = await getDashboardDatafromServer(email)
         dashboardData.status === 200 && setDashboardData(dashboardData)
+        setShowLoader(false)
+        const response1 = await getUpcomingMeetings(localStorage.getItem("email"), localStorage.getItem("role"), 50)
+        dashboardUpcomingMeetings(response1.meetings)
     }
     
       
 
     useEffect(() => {
+        if(!localStorage.getItem("email")){
+            navigate("/", { replace: true })
+        }
         getDashboardData()
     }, [])
 
 
     return <div className="dashboard">
         <Menu />
-        {
-            dashboardData !== "" && <div className="dashboard-container"><h1>Welcome, {dashboardData.dashboardData[0]}</h1>
+        {   
+            role === "tutor" ?
+            <h1 className="meeting-message">Dashboard data is not available for tutors</h1> :
+            showLoader ? 
+            <div className="loader-container"><Loader size={100} /></div> :
+            dashboardData !== "" ? <div className="dashboard-container"><h1>Welcome, {dashboardData.dashboardData[0]}</h1>
             <div className="dashboard-content">
             <div className="key-takeaways">
 
@@ -79,23 +97,18 @@ function Dashboard(){
             </div>
             </div>
 
-            <div className="dashboard-meetings">
-                <div className="dashboard-upcoming-meetings">
-                    {
-                        dashboardUpcomingMeetings.map((dashboardUpcomingMeeting, index) => {
-                            return <Meeting key={index} meeting={dashboardUpcomingMeeting} role={role} previous={false} timeZone={{ timeZone: 'PST' }} />
-                        })
-                    }
-                </div>
-                <div className="dashboard-previous-meetings">
-                    {
-                        dashboardUpcomingMeetings.map((dashboardUpcomingMeeting, index) => {
-                            return <Meeting key={index} meeting={dashboardUpcomingMeeting} role={role} previous={true} timeZone={{ timeZone: 'PST' }} />
-                        })
-                    }
-                </div>
+            
+            <div className="dashboard-upcoming-meetings">
+                {
+                    dashboardUpcomingMeetings.map((dashboardUpcomingMeeting, index) => {
+                        return <Meeting key={index} meeting={dashboardUpcomingMeeting} role={role} previous={false} timeZone={{ timeZone: 'PST' }} />
+                    })
+                }
             </div>
-            </div>
+                
+            
+            </div> :
+            <h1 className="meeting-message">Dashboard data is not available</h1>
         }
         
     </div>

@@ -56,4 +56,7 @@
     .dashboard-container > h1 {
         font-size: 1.7rem;
     }
+    .dashboard {
+        flex-direction: column;
+    }
 }

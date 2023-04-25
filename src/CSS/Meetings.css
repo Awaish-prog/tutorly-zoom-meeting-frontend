@@ -42,5 +42,30 @@ h1 {
 }
 .select-timezone {
     font-size: 1.3rem;
-    margin: 20px 0;
+    margin: 30px 0;
+}
+.timezone {
+    font-weight: bold;
+    width: 80px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.meeting-message {
+    margin: auto;
+}
+optgroup {
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.loader-container {
+    margin: auto;
+    margin-top: 50px;
+}
+@media screen and (max-width: 850px) {
+    .meetings {
+        flex-direction: column;
+    }
+    .meetings-list-container {
+        margin-left: 20px;
+    }
 }

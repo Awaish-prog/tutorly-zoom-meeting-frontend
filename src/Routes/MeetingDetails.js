@@ -1,23 +1,31 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom"
 import { cancelAppointmentWithId, getAvailability, rescheduleMeetingWithTime } from "../apiCalls/apiCalls";
 import "../CSS/MeetingDetails.css"
+import Loader from "../Components/Loader"
+
+
 
 export default function MeetingDeatils(){
 
     const location = useLocation()
 
     const [ message, setMessage ] = useState("")
+    const [ messageReschedule, setMessageReschedule ] = useState("")
     const [ availabilityDate, setAvailabilityDate ] = useState("")
     const [ availabilities, setAvailabilities ] = useState([])
     const [ rescheduleDate, setRescheduleDate ] = useState("")
     const [ showAvailabilityForm, setShowAvailabilityForm ] = useState(false)
+    const [ showCancel, setShowCancel ] = useState(false)
+    const [ showLoader, setShowLoader ] = useState(false)
+    const navigate = useNavigate()
+
+    const timeZoneList = {'America/Los_Angeles': 'PST', 'America/New_York': 'EST', 'America/Chicago':'CST', 'Asia/Kolkata': 'IST','America/Denver': 'MST'}
 
     const meeting = location.state.meeting
     const timeZone = location.state.timeZone
     const previous = location.state.previous
     
-
     function checkRecording(e){
         if(!meeting.notes){
             e.preventDefault()
@@ -26,15 +34,22 @@ export default function MeetingDeatils(){
     }
 
     async function checkAvailabilityWithdate(e){
+        setShowLoader(true)
         e.preventDefault()
         const res = await getAvailability(availabilityDate, meeting.appointmentTypeID)
         setAvailabilities(res.timings)
+        setShowLoader(false)
+    }
+
+    function showCancelConfirm(){
+        setShowCancel(prev => !prev)
+        setShowAvailabilityForm(false)
     }
 
     async function rescheduleMeeting(e){
         e.preventDefault()
         if(rescheduleDate === ""){
-            setMessage("Please select a date")
+            setMessageReschedule("Please select a date")
             return
         }
         const res = await rescheduleMeetingWithTime(rescheduleDate.slice(0, 16), meeting.id)
@@ -53,10 +68,18 @@ export default function MeetingDeatils(){
     function showAvailabilityFormToggle(){
         setShowAvailabilityForm(prev => !prev)
         setAvailabilities([])
+        setShowCancel(false)
     }
+
+    useEffect(() => {
+        if(!localStorage.getItem("email")){
+            navigate("/", { replace: true })
+        }
+    }, [])
 
     return <>
         <h1 className="meeting-heading">{meeting.type}</h1>
+        {timeZoneList[timeZone.timeZone] !== undefined && <h2 className="meeting-heading">Time zone: {timeZoneList[timeZone.timeZone]}</h2>}
         <p className="error-message">{message}</p>
         <div className="meeting-container">
         <div className="meeting-details">
@@ -78,7 +101,15 @@ export default function MeetingDeatils(){
             : 
             <>
             <button className="meeting-links" onClick={showAvailabilityFormToggle}>Reschedule</button>
-            <button className="meeting-links" onClick={cancelAppointment}>Cancel</button>
+            <button className="meeting-links" onClick={showCancelConfirm} >Cancel</button>
+            {
+                showCancel &&
+                <>
+                <p>Cancel this meeting?</p>
+                <button className="meeting-links" onClick={cancelAppointment}>Yes</button>
+                <button className="meeting-links">No</button>
+                </>
+            }
             {
                 showAvailabilityForm && 
                 <>
@@ -86,23 +117,30 @@ export default function MeetingDeatils(){
                 <form onSubmit={(e) => checkAvailabilityWithdate(e)}>
                     <label>Select Date:</label>
                     <input type="date" value={availabilityDate} onChange={(e) => setAvailabilityDate(e.target.value)}></input>
-                    <input className="meeting-links" type="submit"></input>
+                    <input className="meeting-links" type="submit" value="Check Availability"></input>
                 </form>
                 {
                     availabilities.length !== 0 &&
                     <>
-                        <h3>Select Time</h3>
-                        <form onSubmit={rescheduleMeeting}>
-                            {
-                                availabilities.map((availability, index) => {
-                                    return <div key={index}>
-                                    <input type = "radio" value={availability.time} onChange={changeRescheduleDate} checked = {rescheduleDate === availability.time} />
-                                    <label>{new Date(availability.time).toLocaleString('en-US', timeZone)}</label>
-                                    </div>
-                                })
-                            }
-                            <input className="meeting-links" type="submit" />
-                        </form>
+                        <p className="error-message">{messageReschedule}</p>
+                        {
+                            showLoader ? 
+                            <Loader size={50} color="inherit" /> :
+                            <>
+                                <h3>Select Time ({timeZoneList[timeZone.timeZone] !== undefined && timeZoneList[timeZone.timeZone]})</h3>
+                                <form onSubmit={rescheduleMeeting}>
+                                    {
+                                        availabilities.map((availability, index) => {
+                                            return <div key={index}>
+                                            <input type = "radio" value={availability.time} onChange={changeRescheduleDate} checked = {rescheduleDate === availability.time} />
+                                            <label>{new Date(availability.time).toLocaleString('en-US', timeZone)}</label>
+                                            </div>
+                                        })
+                                    }
+                                    <input className="meeting-links" type="submit" value="Reschedule"/>
+                                </form>
+                            </>
+                        }
                     </>
                 }
                 
