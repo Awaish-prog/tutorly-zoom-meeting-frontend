@@ -14,7 +14,7 @@ function Dashboard(){
     
     const [ dashboardData, setDashboardData ] = useState("")
     const [ dashboardUpcomingMeetings, setDashboardUpcomingMeetings ] = useState([])
-    const [ dashboardPreviousMeetings, setDashboardPreviousMeetings ] = useState([])
+    const [ meetingLoader, setMeetingLoader ] = useState(true)
     const [ showLoader, setShowLoader ] = useState(true)
     const navigate = useNavigate()
     const role = localStorage.getItem("role")
@@ -29,7 +29,8 @@ function Dashboard(){
         dashboardData.status === 200 && setDashboardData(dashboardData)
         setShowLoader(false)
         const response1 = await getUpcomingMeetings(localStorage.getItem("email"), localStorage.getItem("role"), 50)
-        dashboardUpcomingMeetings(response1.meetings)
+        response1.status === 200 && setDashboardUpcomingMeetings(response1.meetings)
+        setMeetingLoader(false)
     }
     
       
@@ -99,8 +100,11 @@ function Dashboard(){
 
             
             <div className="dashboard-upcoming-meetings">
+                <h2>Upcoming meetings</h2>
                 {
-                    dashboardUpcomingMeetings.map((dashboardUpcomingMeeting, index) => {
+                    meetingLoader ?
+                    <Loader size={50} /> :
+                    dashboardUpcomingMeetings.slice(0, 2).map((dashboardUpcomingMeeting, index) => {
                         return <Meeting key={index} meeting={dashboardUpcomingMeeting} role={role} previous={false} timeZone={{ timeZone: 'PST' }} />
                     })
                 }

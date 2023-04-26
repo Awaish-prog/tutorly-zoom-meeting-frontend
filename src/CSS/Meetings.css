@@ -68,4 +68,8 @@ optgroup {
     .meetings-list-container {
         margin-left: 20px;
     }
+    .meeting-message {
+        margin: 10vh 10px 0 10px;
+        font-size: 1.5rem;
+    }
 }

@@ -49,6 +49,12 @@
     color: rgb(58, 57, 57);
     text-decoration: underline;
 }
+.dashboard-upcoming-meetings {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
 @media screen and (max-width: 850px) {
     .dashboard-options {
         width: 230px;
@@ -58,5 +64,8 @@
     }
     .dashboard {
         flex-direction: column;
+    }
+    .dashboard-container {
+        margin-top: 5vh;
     }
 }

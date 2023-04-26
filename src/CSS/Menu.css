@@ -49,6 +49,7 @@
     justify-content: center;
     height: 40px;
     border-radius: 50%;
+    cursor: pointer;
 }
 .logo-div > img {
     width: 200px;
@@ -70,6 +71,7 @@
         height: 40px;
         border-radius: 50%;
         margin: 20px 10px 10px 20px;
+        cursor: pointer;
     }
     .logo-div {
         justify-content: space-around;
