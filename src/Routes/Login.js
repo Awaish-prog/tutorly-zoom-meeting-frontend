@@ -61,7 +61,7 @@ export default function Login(){
                         </select>
                         </div>
                         {message && <p className="error-message">{message}</p>}
-                        <input className="submit-login" type="submit" />
+                        <input className="submit-login" type="submit" value="Login" />
                     </form>
                 </>
             } 

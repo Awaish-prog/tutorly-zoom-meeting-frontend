@@ -1,4 +1,4 @@
-const url = "https:/app.tutorly.com/"
+const url = "http://localhost:4005/"
 
 async function getPreviousMeetings(email, role, number){
     const token = localStorage.getItem("token")

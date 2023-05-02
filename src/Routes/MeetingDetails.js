@@ -53,7 +53,9 @@ export default function MeetingDeatils(){
             return
         }
         const res = await rescheduleMeetingWithTime(rescheduleDate.slice(0, 16), meeting.id)
-        setMessage(res.appointment.message)
+        
+        (res.appointment && res.appointment.id) && navigate("/upcomingMeetings", { replace: true })
+        
     }
 
     function changeRescheduleDate(e){
@@ -69,6 +71,7 @@ export default function MeetingDeatils(){
         setShowAvailabilityForm(prev => !prev)
         setAvailabilities([])
         setShowCancel(false)
+        setRescheduleDate("")
     }
 
     useEffect(() => {

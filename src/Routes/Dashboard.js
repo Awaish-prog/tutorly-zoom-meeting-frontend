@@ -93,7 +93,8 @@ function Dashboard(){
             <p><a className="dashboard-links" href={`https://drive.google.com/drive/folders/${dashboardData.dashboardData[15]}`}  target="_blank">Session Recordings</a></p>
             </div>
             <ul>
-                <li>Remember to upload homework before each session by texting (947) 888-7044!</li>
+                <li>Text: (947) 888-7044 (To send photos)</li>
+                <li>Email: homework@mytutorly.com (To send any other file types, such as attachments, PDFs, or Google Drive links)</li>
             </ul>
             </div>
             </div>
@@ -104,9 +105,11 @@ function Dashboard(){
                 {
                     meetingLoader ?
                     <Loader size={50} /> :
+                    dashboardUpcomingMeetings.length ?
                     dashboardUpcomingMeetings.slice(0, 2).map((dashboardUpcomingMeeting, index) => {
                         return <Meeting key={index} meeting={dashboardUpcomingMeeting} role={role} previous={false} timeZone={{ timeZone: 'PST' }} />
-                    })
+                    }) :
+                    <h3>You don't have any upcoming meetings</h3>
                 }
             </div>
                 
