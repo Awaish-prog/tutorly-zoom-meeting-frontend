@@ -1,4 +1,4 @@
-const url = "http://localhost:4005/"
+const url = "/"
 
 async function getPreviousMeetings(email, role, number){
     const token = localStorage.getItem("token")
