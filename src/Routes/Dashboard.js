@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Menu from "../Components/Menu";
 import "../CSS/Dashboard.css"
-import { getDashboardDatafromServer, getPreviousMeetings, getUpcomingMeetings } from "../apiCalls/apiCalls";
+import { getDashboardDatafromServer, getUpcomingMeetings } from "../apiCalls/apiCalls";
 import callUs from "../Images/callUs.png"
 import folder from "../Images/folder.png"
 import keyTakeaways from "../Images/keyTakeaways.png"

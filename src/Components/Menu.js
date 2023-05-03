@@ -10,7 +10,7 @@ import { useState } from "react";
 
 export default function Menu(){
 
-    const email = localStorage.getItem("email")
+    const email = localStorage.getItem("email").toLowerCase()
     const [open, setOpen] = useState(false)
     const navigate = useNavigate()
 
@@ -58,7 +58,9 @@ export default function Menu(){
                 <Link onClick={() => setOpen(false)} className="link" to="/upcomingMeetings"><li>Upcoming Meetings</li></Link>
                 {
                     (email === "awaish@tutorly.com" ||
-                    email === "awaish@mytutorly.com") &&
+                    email === "awaish@mytutorly.com" ||
+                    email === "narinder@tutorly.com" ||
+                    email === "narinder@mytutorly.com") &&
                     <Link className="link" to="/checkLoginId"><li>Check Login Id</li></Link>
                 }
                 <li><button className="logout" onClick={logout}>Logout</button></li>

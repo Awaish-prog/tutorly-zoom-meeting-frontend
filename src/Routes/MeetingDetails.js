@@ -53,7 +53,6 @@ export default function MeetingDeatils(){
             return
         }
         const res = await rescheduleMeetingWithTime(rescheduleDate.slice(0, 16), meeting.id)
-        
         (res.appointment && res.appointment.id) && navigate("/upcomingMeetings", { replace: true })
         
     }
@@ -65,6 +64,7 @@ export default function MeetingDeatils(){
     async function cancelAppointment(){
         const res = await cancelAppointmentWithId(meeting.id) 
         setMessage(res.appointment.message)
+        (res.appointment && res.appointment.id) && navigate("/upcomingMeetings", { replace: true })
     }
 
     function showAvailabilityFormToggle(){
