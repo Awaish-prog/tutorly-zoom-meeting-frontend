@@ -1,4 +1,4 @@
-const url = "/"
+const url = "http://localhost:4005/"
 
 async function getPreviousMeetings(email, role, number){
     const token = localStorage.getItem("token")
@@ -70,7 +70,8 @@ async function cancelAppointmentWithId(id){
 
 async function getDashboardDatafromServer(email){
     const token = localStorage.getItem("token")
-    const response = await fetch(`${url}getDashboardData/${email}`, {
+    const role = localStorage.getItem("role")
+    const response = await fetch(`${url}getDashboardData/${email}/${role}`, {
         headers: {
             "token": token,
             "email": email

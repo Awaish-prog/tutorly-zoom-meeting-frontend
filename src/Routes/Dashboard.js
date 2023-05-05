@@ -21,9 +21,6 @@ function Dashboard(){
 
 
     async function getDashboardData(){
-        if(role === "tutor"){
-            return
-        }
         const email = localStorage.getItem("email")
         const dashboardData = await getDashboardDatafromServer(email)
         dashboardData.status === 200 && setDashboardData(dashboardData)
@@ -47,6 +44,18 @@ function Dashboard(){
         <Menu />
         {   
             role === "tutor" ?
+            showLoader ? 
+            <div className="loader-container"><Loader size={100} /></div> :
+            dashboardData !== "" ?
+            <div>
+            <h1>Students List</h1>
+            {
+                dashboardData.studentsList.map((student, index) => {
+                    return <p key={index}>{student[0]}</p>
+                })
+            }
+            </div>
+             :
             <h1 className="meeting-message">Dashboard data is not available for tutors</h1> :
             showLoader ? 
             <div className="loader-container"><Loader size={100} /></div> :
