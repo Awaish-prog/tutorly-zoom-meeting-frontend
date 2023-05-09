@@ -1,5 +1,7 @@
 .menu { 
-    background-color: rgb(251, 251, 195);
+    /* background-color: rgb(251, 251, 195); */
+    background-color: var(--blue);
+    overflow-y: auto;
 }
 .menu-options {
     font-size: 1.2rem;
@@ -14,9 +16,12 @@
     font-size: 1.3rem;
     margin: 10px 0;
     padding: 10px;
+    color: white;
 }
 .menu-options > .link > li:hover {
-    background-color: var(--blue);
+    background-color: var(--yellow);
+    color: var(--blue);
+    text-decoration: underline;
 }
 .link {
     color: var(--black);
@@ -32,13 +37,15 @@
     height: 100px;
     align-items: center;
     justify-content: center;
+    /* background-color: white; */
 }
 .menu-bar {
     display: none;
 }
 .menu-mobile {
     width: 85vw;
-    background-color: rgb(251, 251, 195);
+    /* background-color: rgb(251, 251, 195); */
+    background-color: var(--blue);
     height: 100vh;
 }
 .close-button {

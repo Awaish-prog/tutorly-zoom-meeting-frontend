@@ -1,5 +1,6 @@
 .dashboard {
     display: flex;
+    height: 100vh;
 }
 .dashboard-container {
     display: flex;
@@ -34,26 +35,60 @@
     width: 300px;
     gap: 10px;
     padding: 15px;
-    background-color: rgb(230, 229, 229);
+    /* background-color: rgb(230, 229, 229); */
+    background-color: var(--yellow);
     margin: 10px;
 }
 .dashboard-options > p {
     margin: 0;
 }
 .dashboard-links {
-    color: rgb(95, 94, 94);
+    /* color: rgb(95, 94, 94); */
+    color: var(--blue);
     text-decoration: none;
     width: fit-content;
 }
-.dashboard-links:hover {
-    color: rgb(58, 57, 57);
+.dashboard-links:hover .dashboard-options {
+    /* color: rgb(58, 57, 57); */
+    color: var(--yellow);
     text-decoration: underline;
+}
+.dashboard-links:hover .dashboard-options {
+    background-color: var(--blue);
+}
+.dashboard-options:hover {
+    background-color: var(--blue);
+}
+.dashboard-options:hover .dashboard-links {
+    color: var(--yellow);
 }
 .dashboard-upcoming-meetings {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
+}
+.list-of-students {
+    margin-left: 50px;
+    width: 80%;
+    overflow-y: scroll;
+}
+.student-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.student-name {
+    font-weight: bolder;
+    padding: 15px;
+    box-shadow: 0px 15px 40px 0px rgba(0, 0, 0, 0.1);
+    color: var(--blue);
+    cursor: pointer;
+}
+.student-name:hover {
+    background-color: var(--blue);
+    color: var(--yellow);
+    text-decoration: underline;
 }
 @media screen and (max-width: 850px) {
     .dashboard-options {
@@ -68,4 +103,7 @@
     .dashboard-container {
         margin-top: 5vh;
     }
+}
+.no-hover:hover {
+    background-color: var(--yellow);
 }

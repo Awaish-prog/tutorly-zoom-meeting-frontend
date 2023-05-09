@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import Menu from "../Components/Menu";
+import { useEffect, useState } from "react"
+import Loader from "../Components/Loader"
 import "../CSS/Dashboard.css"
 import { getDashboardDatafromServer, getUpcomingMeetings } from "../apiCalls/apiCalls";
 import callUs from "../Images/callUs.png"
@@ -7,78 +7,47 @@ import folder from "../Images/folder.png"
 import keyTakeaways from "../Images/keyTakeaways.png"
 import doc from "../Images/doc.png"
 import Meeting from "../Components/Meeting";
-import Loader from "../Components/Loader";
-import { useNavigate } from "react-router-dom";
 import cellPhoneIcon from "../Images/cellPhoneicon.png" 
+import Menu from "../Components/Menu";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function Dashboard(){
-    
+
+export default function DashboardTutor(){
+    const location = useLocation()
+    const navigate = useNavigate()
     const [ dashboardData, setDashboardData ] = useState("")
     const [ dashboardUpcomingMeetings, setDashboardUpcomingMeetings ] = useState([])
     const [ meetingLoader, setMeetingLoader ] = useState(true)
     const [ showLoader, setShowLoader ] = useState(true)
-    const navigate = useNavigate()
-    const role = localStorage.getItem("role")
-    const email = localStorage.getItem("email")
 
     async function getDashboardData(){
-        const dashboardData = await getDashboardDatafromServer(email)
+        const email = location.state.email.toLowerCase()
+        const dashboardData = await getDashboardDatafromServer(email, "student")
         dashboardData.status === 200 && setDashboardData(dashboardData)
         setShowLoader(false)
-        const response1 = await getUpcomingMeetings(email, role, 50)
+        const response1 = await getUpcomingMeetings(email, "student", 50)
         response1.status === 200 && setDashboardUpcomingMeetings(response1.meetings)
         setMeetingLoader(false)
     }
 
-    function gotoStudentData(student){
-        navigate("/dashboardTutor", {state : { email: student[1]} })
-    }
-    
-      
 
     useEffect(() => {
         if(!localStorage.getItem("email")){
             navigate("/", { replace: true })
         }
-        getDashboardData()
+        else{
+            getDashboardData()
+        }
+        
     }, [])
 
-
-    return <div className="dashboard">
-        <Menu />
-        {   
-            role === "tutor" ?
-            showLoader ? 
-            <div className="loader-container"><Loader size={100} /></div> :
-            dashboardData !== "" ?
-            <div className="list-of-students">
-            <h1>Welcome, {email.substring(0, 1).toUpperCase() + email.substring(1, email.indexOf("@"))}</h1>
-            <h2>List of Students</h2>
-            {dashboardData.studentsList.length ? <div className="student-list-container">
+    return (
+        <div className="dashboard">
+            <Menu />
             {
-                dashboardData.studentsList.sort().map((student, index) => {
-                    return <p key={index} className="student-name" onClick={() => gotoStudentData(student)}>{student[0]}</p>
-                })
-            }
-            </div> : <h3>List of students is not available either you don't have any students yet or data of your students is not present in out database.</h3>}
-            <div className="dashboard-upcoming-meetings">
-                <h2>Upcoming meetings</h2>
-                {
-                    meetingLoader ?
-                    <Loader size={50} /> :
-                    dashboardUpcomingMeetings.length ?
-                    dashboardUpcomingMeetings.slice(0, 2).map((dashboardUpcomingMeeting, index) => {
-                        return <Meeting key={index} meeting={dashboardUpcomingMeeting} role={role} previous={false} timeZone={{ timeZone: 'PST' }} />
-                    }) :
-                    <h3>You don't have any upcoming meetings</h3>
-                }
-            </div>
-            </div>
-             :
-            <h1 className="meeting-message">Dashboard data is not available for tutors</h1> :
             showLoader ? 
             <div className="loader-container"><Loader size={100} /></div> :
-            dashboardData !== "" ? <div className="dashboard-container"><h1>Welcome, {dashboardData.dashboardData[0]}</h1>
+            dashboardData !== "" ? <div className="dashboard-container"><h1>{dashboardData.dashboardData[0]}'s Dashboard</h1>
             <div className="dashboard-content">
             <div className="key-takeaways">
 
@@ -143,18 +112,16 @@ function Dashboard(){
                     <Loader size={50} /> :
                     dashboardUpcomingMeetings.length ?
                     dashboardUpcomingMeetings.slice(0, 2).map((dashboardUpcomingMeeting, index) => {
-                        return <Meeting key={index} meeting={dashboardUpcomingMeeting} role={role} previous={false} timeZone={{ timeZone: 'PST' }} />
+                        return <Meeting key={index} meeting={dashboardUpcomingMeeting} role={"student"} previous={false} timeZone={{ timeZone: 'PST' }} />
                     }) :
-                    <h3>You don't have any upcoming meetings</h3>
+                    <h3>This student doesn't have any upcoming meetings</h3>
                 }
             </div>
                 
             
             </div> :
             <h1 className="meeting-message">Dashboard data is not available</h1>
-        }
-        
-    </div>
+            }
+            </div>
+    )
 }
-
-export default Dashboard

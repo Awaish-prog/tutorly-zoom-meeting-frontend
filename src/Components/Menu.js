@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../CSS/Meetings.css";
-import tutorlyLogo from "../Images/tutorly-logo.png"
+import tutorlyLogo from "../Images/logo1.png"
 import "../CSS/Menu.css"
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
@@ -10,7 +10,7 @@ import { useState } from "react";
 
 export default function Menu(){
 
-    const email = localStorage.getItem("email").toLowerCase()
+    const email = localStorage.getItem("email") ? localStorage.getItem("email").toLowerCase() : "email"
     const [open, setOpen] = useState(false)
     const navigate = useNavigate()
 
@@ -33,7 +33,9 @@ export default function Menu(){
                 <Link className="link" to="/upcomingMeetings"><li>Upcoming Meetings</li></Link>
                 {
                     (email === "awaish@tutorly.com" ||
-                    email === "awaish@mytutorly.com") &&
+                    email === "awaish@mytutorly.com" ||
+                    email === "narinder@tutorly.com" ||
+                    email === "narinder@mytutorly.com") &&
                     <Link className="link" to="/checkLoginId"><li>Check Login Id</li></Link>
                 }
                 <li><button className="logout" onClick={logout}>Logout</button></li>

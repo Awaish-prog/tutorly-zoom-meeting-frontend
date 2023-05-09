@@ -5,6 +5,7 @@ import PreviousMeetings from "./Routes/PreviousMeetings";
 import MeetingDeatils from "./Routes/MeetingDetails";
 import Dashboard from "./Routes/Dashboard";
 import CheckStudentId from "./Routes/CheckStudentId";
+import DashboardTutor from "./Routes/DashboardTutor";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/previousMeetings" element = {<PreviousMeetings />} />
       <Route path="/meetingDetails" element = {<MeetingDeatils />} />
       <Route path="/checkLoginId" element = {<CheckStudentId />} />
+      <Route path="/dashboardTutor" element = {<DashboardTutor />} />
     </Routes>
   );
 }

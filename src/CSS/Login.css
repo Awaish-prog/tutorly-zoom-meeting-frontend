@@ -53,6 +53,10 @@ form > h1 {
     background-color: var(--blue);
     color: white;
 }
+.logout:hover {
+    background-color: white;
+    color: var(--blue);
+}
 .logout {
     margin-left: 10px;
 }

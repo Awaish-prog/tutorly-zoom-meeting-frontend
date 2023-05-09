@@ -13,10 +13,11 @@ async function getPreviousMeetings(email, role, number){
 
 async function getUpcomingMeetings(email, role, number){
     const token = localStorage.getItem("token")
+    const emailToken = localStorage.getItem("email")
     const response = await fetch(`${url}getUpcomingMeetings/${email}/${role}/${number}`, {
         headers: {
             "token": token,
-            "email": email
+            "email": emailToken
         }
     })
     return await response.json()
@@ -68,13 +69,14 @@ async function cancelAppointmentWithId(id){
     return await response.json()
 }
 
-async function getDashboardDatafromServer(email){
+async function getDashboardDatafromServer(email, roleStudent){
     const token = localStorage.getItem("token")
-    const role = localStorage.getItem("role")
+    const role = roleStudent ? roleStudent : localStorage.getItem("role")
+    const emailToken = localStorage.getItem("email")
     const response = await fetch(`${url}getDashboardData/${email}/${role}`, {
         headers: {
             "token": token,
-            "email": email
+            "email": emailToken
         }
     })
     return await response.json()
