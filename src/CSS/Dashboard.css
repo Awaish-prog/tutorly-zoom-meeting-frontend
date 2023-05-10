@@ -9,6 +9,7 @@
     width: 100%;
     font-size: large;
     font-weight: bold;
+    overflow-y: scroll;
 }
 .dashboard-content {
     display: flex;

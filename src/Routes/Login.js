@@ -33,7 +33,7 @@ export default function Login(){
         const response = await loginUser(email.toLowerCase(), role, id)
         localStorage.setItem("token", response.token)
         setShowLoader(false)
-        response.status === 200 ? navigate("/dashboard", { replace: true }) : response.status === 400 ? setMessage("wrong password") : setMessage("This email was not found, please check the email and the role you selected");
+        response.status === 200 ? navigate("/dashboard", { replace: true }) : response.status === 400 ? setMessage("wrong Id") : setMessage("This email was not found, please check the email and the role you selected");
     }
 
     return (
