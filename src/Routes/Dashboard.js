@@ -60,7 +60,7 @@ function Dashboard(){
                     return <p key={index} className="student-name" onClick={() => gotoStudentData(student)}>{student[0]}</p>
                 })
             }
-            </div> : <h3>List of students is not available either you don't have any students yet or data of your students is not present in out database.</h3>}
+            </div> : <h3>List of students is not available either you don't have any students yet or data of your students is not present in our database.</h3>}
             <div className="dashboard-upcoming-meetings">
                 <h2>Upcoming meetings</h2>
                 {
