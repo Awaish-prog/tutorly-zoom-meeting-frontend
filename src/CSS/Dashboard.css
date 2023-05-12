@@ -91,6 +91,22 @@
     color: var(--yellow);
     text-decoration: underline;
 }
+.dashboard-upcoming-meetings {
+    width: 100%;
+}
+.dashboard-upcoming-meetings-list, .dashboard-upcoming-meetings-list-tutor {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.dashboard-upcoming-meetings-list-tutor {
+    justify-content: left;
+}
+.dashboard-upcoming-meetings-heading {
+    text-align: center;
+}
 @media screen and (max-width: 850px) {
     .dashboard-options {
         width: 230px;

@@ -67,9 +67,13 @@ function Dashboard(){
                     meetingLoader ?
                     <Loader size={50} /> :
                     dashboardUpcomingMeetings.length ?
-                    dashboardUpcomingMeetings.slice(0, 2).map((dashboardUpcomingMeeting, index) => {
-                        return <Meeting key={index} meeting={dashboardUpcomingMeeting} role={role} previous={false} timeZone={{ timeZone: 'PST' }} />
-                    }) :
+                    <div className="dashboard-upcoming-meetings-list-tutor">
+                        {
+                            dashboardUpcomingMeetings.slice(0, 2).map((dashboardUpcomingMeeting, index) => {
+                                return <Meeting key={index} meeting={dashboardUpcomingMeeting} role={role} previous={false} timeZone={{ timeZone: 'PST' }} />
+                            })
+                        }
+                    </div> :
                     <h3>You don't have any upcoming meetings</h3>
                 }
             </div>
@@ -137,15 +141,23 @@ function Dashboard(){
 
             
             <div className="dashboard-upcoming-meetings">
-                <h2>Upcoming meetings</h2>
+                <h2 className="dashboard-upcoming-meetings-heading">Upcoming meetings</h2>
                 {
                     meetingLoader ?
-                    <Loader size={50} /> :
+                    <div className="dashboard-upcoming-meetings-list">
+                    <Loader size={50} />
+                    </div> :
                     dashboardUpcomingMeetings.length ?
-                    dashboardUpcomingMeetings.slice(0, 2).map((dashboardUpcomingMeeting, index) => {
-                        return <Meeting key={index} meeting={dashboardUpcomingMeeting} role={role} previous={false} timeZone={{ timeZone: 'PST' }} />
-                    }) :
+                    <div className="dashboard-upcoming-meetings-list">
+                        {
+                            dashboardUpcomingMeetings.slice(0, 2).map((dashboardUpcomingMeeting, index) => {
+                                return <Meeting key={index} meeting={dashboardUpcomingMeeting} role={role} previous={false} timeZone={{ timeZone: 'PST' }} />
+                            })
+                        }
+                    </div> :
+                    <div className="dashboard-upcoming-meetings-list">
                     <h3>You don't have any upcoming meetings</h3>
+                    </div>
                 }
             </div>
                 

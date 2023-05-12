@@ -106,15 +106,23 @@ export default function DashboardTutor(){
 
             
             <div className="dashboard-upcoming-meetings">
-                <h2>Upcoming meetings</h2>
+                <h2 className="dashboard-upcoming-meetings-heading">Upcoming meetings</h2>
                 {
                     meetingLoader ?
-                    <Loader size={50} /> :
+                    <div className="dashboard-upcoming-meetings-list">
+                    <Loader size={50} />
+                    </div> :
                     dashboardUpcomingMeetings.length ?
-                    dashboardUpcomingMeetings.slice(0, 2).map((dashboardUpcomingMeeting, index) => {
-                        return <Meeting key={index} meeting={dashboardUpcomingMeeting} role={"student"} previous={false} timeZone={{ timeZone: 'PST' }} />
-                    }) :
+                    <div className="dashboard-upcoming-meetings-list">
+                        {
+                            dashboardUpcomingMeetings.slice(0, 2).map((dashboardUpcomingMeeting, index) => {
+                                return <Meeting key={index} meeting={dashboardUpcomingMeeting} role={"student"} previous={false} timeZone={{ timeZone: 'PST' }} />
+                            })
+                        }
+                    </div> :
+                    <div className="dashboard-upcoming-meetings-list">
                     <h3>This student doesn't have any upcoming meetings</h3>
+                    </div>
                 }
             </div>
                 

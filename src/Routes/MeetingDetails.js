@@ -91,7 +91,7 @@ export default function MeetingDeatils(){
         <p>Date-time: {new Date(meeting.datetime).toLocaleString('en-US', timeZone)}</p>
         {
             previous ? 
-            <button className="meeting-links"><a onClick={checkRecording} href={meeting.notes ? meeting.notes : ""} target="_blank">Recording Link</a></button> 
+            <p className="meeting-links"><a onClick={checkRecording} href={meeting.notes ? meeting.notes : ""} target="_blank">Recording Link</a></p> 
             :
             <button className="meeting-links"><a href={meeting.location.slice(5, meeting.location.indexOf(" ", 5))} target="_blank">Join Meeting</a></button>
         }

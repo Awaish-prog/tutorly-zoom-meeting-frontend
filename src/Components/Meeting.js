@@ -59,8 +59,8 @@ export default function Meeting({ meeting, role, previous, timeZone }){
             <p>{new Date(meeting.datetime).toLocaleString('en-US', timeZone)}</p>
             {meeting.labels ? 
             <p>status: <span style={styles[meeting.labels[0].name]}>{meeting.labels[0].name}</span></p> :
-            <p>status: <span style={styles.unavailable}>Unavailable</span></p>}
-            {!previous && <button className="meeting-links"><a href={meeting.location.slice(5, meeting.location.indexOf(" ", 5))} target="_blank">Join Meeting</a></button>}
+            <p>status: <span style={styles.unavailable}>Scheduled</span></p>}
+            {!previous && <p className="meeting-links"><a href={meeting.location.slice(5, meeting.location.indexOf(" ", 5))} target="_blank">Join Meeting</a></p>}
         </div>
     )
 }
