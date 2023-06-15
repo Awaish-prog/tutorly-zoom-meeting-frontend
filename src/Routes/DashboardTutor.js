@@ -52,7 +52,8 @@ export default function DashboardTutor(){
             <div className="key-takeaways">
 
             <div className="dashboard-options no-hover">
-            <img className="dashboard-logos" src={keyTakeaways} alt="key takeaways" />
+            {/* <img className="dashboard-logos" src={keyTakeaways} alt="key takeaways" /> */}
+            <p>📝</p>
             <p>View Your Key Takeaways</p>
             </div>
 
@@ -65,6 +66,37 @@ export default function DashboardTutor(){
                         </div></a>
                 })
             }
+            {
+                dashboardData.ixlCredentials && <>
+                    <hr></hr>
+            <div className="dashboard-options no-hover">
+            {/* <img className="dashboard-logos" src={keyTakeaways} alt="key takeaways" /> */}
+            <p>📝</p>
+            <p>IXL Login Info</p>
+            </div>
+
+            <a className="dashboard-links" href="https://in.ixl.com/?partner=google&campaign=248380048&adGroup=129630696407&gclid=CjwKCAjwyqWkBhBMEiwAp2yUFpbcijZ9CHdTkgaIOPjK81jzxXk8Km1tge8iziC2Dw1plGJGB4hgqRoCqgkQAvD_BwE" target="_blank">
+            <div className="dashboard-options">
+            {/* <img className="dashboard-logos" src={ixlLogin} alt="doc" /> */}
+            <p>💻</p>
+            <p>Login to IXL</p>
+            </div></a>
+
+            <div className="dashboard-options no-hover">
+            {/* <img className="dashboard-logos" src={key} alt="key takeaways" /> */}
+            <p>⌨️</p>
+            <p>Your credentials
+                <br></br>
+                <hr></hr>
+                Username: {dashboardData.ixlCredentials.userName}
+                <br></br>
+                <hr></hr>
+                Password: {dashboardData.ixlCredentials.password}
+            </p>
+            </div>
+                </>
+            }
+            
             </div>
 
             <div className="session-details">

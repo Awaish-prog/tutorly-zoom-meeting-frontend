@@ -5,11 +5,13 @@ import { getDashboardDatafromServer, getUpcomingMeetings } from "../apiCalls/api
 import callUs from "../Images/callUs.png"
 import folder from "../Images/folder.png"
 import keyTakeaways from "../Images/keyTakeaways.png"
+import key from "../Images/key.png"
 import doc from "../Images/doc.png"
 import Meeting from "../Components/Meeting";
 import Loader from "../Components/Loader";
 import { useNavigate } from "react-router-dom";
 import cellPhoneIcon from "../Images/cellPhoneicon.png" 
+import ixlLogin from "../Images/ixlLogin.png"
 
 function Dashboard(){
     
@@ -43,7 +45,7 @@ function Dashboard(){
         getDashboardData()
     }, [])
 
-
+    console.log(dashboardData.ixlCredentials);
     return <div className="dashboard">
         <Menu />
         {   
@@ -87,7 +89,8 @@ function Dashboard(){
             <div className="key-takeaways">
 
             <div className="dashboard-options no-hover">
-            <img className="dashboard-logos" src={keyTakeaways} alt="key takeaways" />
+            {/* <img className="dashboard-logos" src={keyTakeaways} alt="key takeaways" /> */}
+            <p>📝</p>
             <p>View Your Key Takeaways</p>
             </div>
 
@@ -100,7 +103,40 @@ function Dashboard(){
                         </div></a>
                 })
             }
+            {
+                dashboardData.ixlCredentials && <>
+                    <hr></hr>
+            <div className="dashboard-options no-hover">
+            {/* <img className="dashboard-logos" src={keyTakeaways} alt="key takeaways" /> */}
+            <p>📝</p>
+            <p>IXL Login Info</p>
             </div>
+
+            <a className="dashboard-links" href="https://in.ixl.com/?partner=google&campaign=248380048&adGroup=129630696407&gclid=CjwKCAjwyqWkBhBMEiwAp2yUFpbcijZ9CHdTkgaIOPjK81jzxXk8Km1tge8iziC2Dw1plGJGB4hgqRoCqgkQAvD_BwE" target="_blank">
+            <div className="dashboard-options">
+            {/* <img className="dashboard-logos" src={ixlLogin} alt="doc" /> */}
+            <p>💻</p>
+            <p>Login to IXL</p>
+            </div></a>
+
+            <div className="dashboard-options no-hover">
+            {/* <img className="dashboard-logos" src={key} alt="key takeaways" /> */}
+            <p>⌨️</p>
+            <p>Your credentials
+                <br></br>
+                <hr></hr>
+                Username: {dashboardData.ixlCredentials.userName}
+                <br></br>
+                <hr></hr>
+                Password: {dashboardData.ixlCredentials.password}
+            </p>
+            </div>
+                </>
+            }
+            
+            </div>
+
+            
 
             <div className="session-details">
 
