@@ -24,12 +24,12 @@ function Dashboard(){
     const email = localStorage.getItem("email")
 
     async function getDashboardData(){
-        const dashboardData = await getDashboardDatafromServer(email)
-        dashboardData.status === 200 && setDashboardData(dashboardData)
-        setShowLoader(false)
-        const response1 = await getUpcomingMeetings(email, role, 50)
-        response1.status === 200 && setDashboardUpcomingMeetings(response1.meetings)
-        setMeetingLoader(false)
+        // const dashboardData = await getDashboardDatafromServer(email)
+        // dashboardData.status === 200 && setDashboardData(dashboardData)
+        // setShowLoader(false)
+        // const response1 = await getUpcomingMeetings(email, role, 50)
+        // response1.status === 200 && setDashboardUpcomingMeetings(response1.meetings)
+        // setMeetingLoader(false)
     }
 
     function gotoStudentData(student){
