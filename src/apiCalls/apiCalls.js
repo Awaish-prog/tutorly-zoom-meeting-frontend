@@ -98,4 +98,22 @@ async function loginUser(email, role, id){
     return await response.json()
 }
 
-export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId, getDashboardDatafromServer, loginUser }
+async function createWhiteboardData(paperName, paperLink, tutorEmail, studentEmail, dateAndTime, paperData){
+    const token = localStorage.getItem("token")
+    const email = localStorage.getItem("email")
+    const response = await fetch(`${url}createWhiteboardData`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "token": token,
+            "email": email
+        },
+        body : JSON.stringify({
+            paperName, paperLink, tutorEmail, studentEmail, dateAndTime, paperData
+        })
+    })
+    return await response.json()
+}
+
+
+export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId, getDashboardDatafromServer, loginUser, createWhiteboardData }
