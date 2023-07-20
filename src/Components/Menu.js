@@ -59,6 +59,7 @@ export default function Menu(){
                 <Link onClick={() => setOpen(false)} className="link" to="/dashboard"><li>Dashboard</li></Link>
                 <Link onClick={() => setOpen(false)} className="link" to="/previousMeetings"><li>Previous Meetings</li></Link>
                 <Link onClick={() => setOpen(false)} className="link" to="/upcomingMeetings"><li>Upcoming Meetings</li></Link>
+                <Link className="link" to="/whiteboards"><li>Whiteboards</li></Link>
                 {
                     (email === "awaish@tutorly.com" ||
                     email === "awaish@mytutorly.com" ||

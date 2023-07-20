@@ -115,5 +115,22 @@ async function createWhiteboardData(paperName, paperLink, tutorEmail, studentEma
     return await response.json()
 }
 
+async function getBoardsList(){
+    const token = localStorage.getItem("token")
+    const email = localStorage.getItem("email")
+    const role = localStorage.getItem("role")
+    const response = await fetch(`${url}getBoardsList`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "token": token,
+            "email": email
+        },
+        body : JSON.stringify({
+            email, role
+        })
+    })
+    return await response.json()
+}
 
-export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId, getDashboardDatafromServer, loginUser, createWhiteboardData }
+export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId, getDashboardDatafromServer, loginUser, createWhiteboardData, getBoardsList }

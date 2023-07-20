@@ -10,7 +10,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import CryptoJS from 'crypto-js';
 import { secretKey } from "../Secret";
-import { createWhiteboardData } from "../apiCalls/apiCalls";
+import Loader from "../Components/Loader"
+import { createWhiteboardData, getBoardsList } from "../apiCalls/apiCalls";
 
 
 export default function WhiteBoards(){
@@ -22,6 +23,7 @@ export default function WhiteBoards(){
     const [ paperName, setPaperName ] = useState("")
     const [ message, setMessage ] = useState(false)
     const [ errorMessage, setErrorMessage ] = useState("")
+    const [ loader, setLoader ] = useState(true)
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -99,8 +101,14 @@ export default function WhiteBoards(){
         setPaperName(e.target.value)
     }
 
+    async function getBoardsListAsync(){
+        const boardsData = await getBoardsList()
+        boardsData.status && boardsData.status === 200 && setWhiteBoards(boardsData.boardsList)
+        setLoader(false)
+    }
+
     useEffect(() => {
-        console.log(window.location.href);
+        getBoardsListAsync()
     }, [])
 
     return (
@@ -118,7 +126,7 @@ export default function WhiteBoards(){
                     </DialogContentText>
                     <TextField margin="dense" id="name" label="Paper Name" type="text" fullWidth variant="standard" value={paperName} onChange={handlePaper} />
 
-                    <TextField autoFocus margin="dense" id="name" label="Email Address" type="email" fullWidth variant="standard" value={studentEmail} onChange={handleStudentEmail} />
+                    <TextField autoFocus margin="dense" id="name" label="Student's email Address" type="email" fullWidth variant="standard" value={studentEmail} onChange={handleStudentEmail} />
                     </DialogContent>
                     <DialogActions>
                     <Button onClick={handleSkip}>Create without student's email</Button>
@@ -131,17 +139,31 @@ export default function WhiteBoards(){
             </Dialog>
 
             <Menu />
-            <div>
+            <div className="whiteboardDiv">
             <h1>Whiteboards</h1>
-            <button onClick={handleClickOpen}>Create New Whiteboard</button>
+            <div className="newBoardButtonContainer">
+            <button className="newBoardButton" onClick={handleClickOpen}>Create New Whiteboard</button>
+            </div>
             {
-                whiteboards.length ?
-                whiteboards.map((whiteboard, index) => {
-                    return <p>whiteboard</p>
-                })
+                loader ?
+                <div className ="loaderDiv">
+                <Loader size={100} />
+                </div>
                 :
-                <h2>You do not have any whiteboards</h2>
+                <div className = "boardsList">
+                {
+                    whiteboards.length ?
+                    whiteboards.map((whiteboard, index) => {
+                        return <a key={index} href={whiteboard[1]} target="_blank" ><div className="paperDiv">
+                        {whiteboard[0]}
+                        </div></a>
+                    })
+                    :
+                    <h2>You do not have any whiteboards</h2>
+                }
+                </div>
             }
+            
             </div>
         </div>
     )
