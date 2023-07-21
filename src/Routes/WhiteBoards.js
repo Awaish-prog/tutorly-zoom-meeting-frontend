@@ -12,18 +12,20 @@ import CryptoJS from 'crypto-js';
 import { secretKey } from "../Secret";
 import Loader from "../Components/Loader"
 import { createWhiteboardData, getBoardsList } from "../apiCalls/apiCalls";
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 export default function WhiteBoards(){
 
     const [ whiteboards, setWhiteBoards ] = useState([])
-    const address = 'http://localhost:3001/joinWhiteboard/'
+    const address = 'https://app.tutorly.com/joinWhiteboard/'
     const [open, setOpen] = useState(false);
     const [ studentEmail, setStudentEmail ] = useState("")
     const [ paperName, setPaperName ] = useState("")
     const [ message, setMessage ] = useState(false)
     const [ errorMessage, setErrorMessage ] = useState("")
     const [ loader, setLoader ] = useState(true)
+    const [ formLoader, setFormLoader ] = useState(false)
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -45,6 +47,8 @@ export default function WhiteBoards(){
         }
         setMessage(false)
 
+        setFormLoader(true)
+
         const email = localStorage.getItem('email')
         const date = new Date()
         const dateString = date.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }).replaceAll("/", "-")
@@ -55,6 +59,10 @@ export default function WhiteBoards(){
 
         const response = await createWhiteboardData(paperName, paperLink, email, studentEmail, dateString, "")
 
+        setFormLoader(false)
+
+        
+
         if(response.status && response.status === 200){
             const newWindow = window.open(paperLink, '_blank');
             newWindow.opener = null;
@@ -63,7 +71,7 @@ export default function WhiteBoards(){
         else{
             setErrorMessage("Page wasn't created because of an unexpected error")
         }
-
+        setOpen(false)
     }
 
     const handleCreate = async () => {
@@ -72,6 +80,7 @@ export default function WhiteBoards(){
             return
         }
         setMessage(false)
+        setFormLoader(true)
 
         const email = localStorage.getItem('email')
         const date = new Date()
@@ -83,6 +92,8 @@ export default function WhiteBoards(){
 
         const response = await createWhiteboardData(paperName, paperLink, email, studentEmail, dateString, "")
 
+        setFormLoader(false)
+        
         if(response.status && response.status === 200){
             const newWindow = window.open(paperLink, '_blank');
             newWindow.opener = null;
@@ -91,6 +102,8 @@ export default function WhiteBoards(){
         else{
             setErrorMessage("Page wasn't created because of an unexpected error")
         }
+        setOpen(false)
+
     }
 
     const handleStudentEmail = (e) => {
@@ -120,14 +133,22 @@ export default function WhiteBoards(){
                     :
                     <>
                     <DialogTitle>Create New Paper</DialogTitle>
-                    <DialogContent>
-                    <DialogContentText style= { (message || !paperName) ? {color: 'red'} : {}}>
+                    {
+                        formLoader ?
+                        <div className = "loaderMargin">
+                        <CircularProgress />
+                        </div>
+                        :
+                        <DialogContent>
+                        <DialogContentText style= { (message || !paperName) ? {color: 'red'} : {}}>
                         {paperName ? "Enter Student's Email" : 'Please enter paper name'} 
-                    </DialogContentText>
-                    <TextField margin="dense" id="name" label="Paper Name" type="text" fullWidth variant="standard" value={paperName} onChange={handlePaper} />
+                        </DialogContentText>
+                        <TextField margin="dense" id="name" label="Paper Name" type="text" fullWidth variant="standard" value={paperName} onChange={handlePaper} />
 
-                    <TextField autoFocus margin="dense" id="name" label="Student's email Address" type="email" fullWidth variant="standard" value={studentEmail} onChange={handleStudentEmail} />
-                    </DialogContent>
+                        <TextField autoFocus margin="dense" id="name" label="Student's email Address" type="email" fullWidth variant="standard" value={studentEmail} onChange={handleStudentEmail} />
+                        </DialogContent>
+                    }
+                    
                     <DialogActions>
                     <Button onClick={handleSkip}>Create without student's email</Button>
                     <Button onClick={handleClose}>Cancel</Button>
@@ -142,7 +163,7 @@ export default function WhiteBoards(){
             <div className="whiteboardDiv">
             <h1>Whiteboards</h1>
             <div className="newBoardButtonContainer">
-            <button className="newBoardButton" onClick={handleClickOpen}>Create New Whiteboard</button>
+            {localStorage.getItem('role') === "tutor" && <button className="newBoardButton" onClick={handleClickOpen}>Create New Whiteboard</button>}
             </div>
             {
                 loader ?

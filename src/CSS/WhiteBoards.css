@@ -24,6 +24,9 @@
     justify-content: center;
     margin-top: 90px;
 }
+.loaderMargin {
+    margin-left: 15px;
+}
 .paperDiv:hover{
     outline: 5px solid var(--blue);
     background-color: var(--blue);
