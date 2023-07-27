@@ -133,4 +133,22 @@ async function getBoardsList(){
     return await response.json()
 }
 
-export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId, getDashboardDatafromServer, loginUser, createWhiteboardData, getBoardsList }
+async function deleteWhiteboard(paperLink){
+    const token = localStorage.getItem("token")
+    const email = localStorage.getItem("email")
+    const role = localStorage.getItem("role")
+    const response = await fetch(`${url}deleteWhiteboard`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "token": token,
+            "email": email
+        },
+        body : JSON.stringify({
+            paperLink
+        })
+    })
+    return await response.json()
+}
+
+export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId, getDashboardDatafromServer, loginUser, createWhiteboardData, getBoardsList, deleteWhiteboard }

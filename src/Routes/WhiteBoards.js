@@ -11,8 +11,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import CryptoJS from 'crypto-js';
 import { secretKey } from "../Secret";
 import Loader from "../Components/Loader"
-import { createWhiteboardData, getBoardsList } from "../apiCalls/apiCalls";
+import { createWhiteboardData, deleteWhiteboard, getBoardsList } from "../apiCalls/apiCalls";
 import CircularProgress from '@mui/material/CircularProgress';
+import { MdDelete } from "react-icons/md"
 
 
 export default function WhiteBoards(){
@@ -26,7 +27,9 @@ export default function WhiteBoards(){
     const [ errorMessage, setErrorMessage ] = useState("")
     const [ loader, setLoader ] = useState(true)
     const [ formLoader, setFormLoader ] = useState(false)
-
+    const [ deleteOpen, setDeleteOpen ] = useState(false)
+    const [ deleteIndex, setDeleteIndex ] = useState(-1)
+    
     const handleClickOpen = () => {
         setOpen(true);
         const tutorEmail = localStorage.getItem('email') 
@@ -40,6 +43,15 @@ export default function WhiteBoards(){
         setOpen(false);
         setMessage(false)
     };
+
+    function handleDelete(index){
+        setDeleteIndex(index)
+        setDeleteOpen(true)
+    }
+
+    function closeDeletePaper(){
+        setDeleteOpen(false)
+    }
 
     const handleSkip = async () => {
         if(!paperName){
@@ -65,7 +77,9 @@ export default function WhiteBoards(){
 
         if(response.status && response.status === 200){
             const newWindow = window.open(paperLink, '_blank');
+            newWindow.postMessage(localStorage.getItem('role'), '*');
             newWindow.opener = null;
+            
             setOpen(false)
         }
         else{
@@ -96,6 +110,7 @@ export default function WhiteBoards(){
         
         if(response.status && response.status === 200){
             const newWindow = window.open(paperLink, '_blank');
+            newWindow.postMessage(localStorage.getItem('role'), '*');
             newWindow.opener = null;
             setOpen(false)
         }
@@ -116,8 +131,21 @@ export default function WhiteBoards(){
 
     async function getBoardsListAsync(){
         const boardsData = await getBoardsList()
-        boardsData.status && boardsData.status === 200 && setWhiteBoards(boardsData.boardsList)
+        boardsData.status && boardsData.status === 200 && setWhiteBoards(boardsData.boardsList.reverse())
         setLoader(false)
+    }
+
+    async function deletePaperApiCall(){
+        if(deleteIndex >= 0 && whiteboards[deleteIndex] && whiteboards[deleteIndex][1]){
+            setWhiteBoards((prev) => {
+                const newBoards = [...prev]
+                newBoards.splice(deleteIndex, 1)
+                return newBoards
+            })
+            setDeleteOpen(false)
+            const response = await deleteWhiteboard(whiteboards[deleteIndex][1])
+        }
+        setDeleteOpen(false)
     }
 
     useEffect(() => {
@@ -159,6 +187,13 @@ export default function WhiteBoards(){
                 
             </Dialog>
 
+            <Dialog open={deleteOpen}>
+                <DialogTitle>Delete this paper?</DialogTitle>
+                <Button onClick={deletePaperApiCall}>Yes</Button>
+                <Button onClick={closeDeletePaper}>No</Button>
+            </Dialog>
+
+            
             <Menu />
             <div className="whiteboardDiv">
             <h1>Whiteboards</h1>
@@ -175,9 +210,12 @@ export default function WhiteBoards(){
                 {
                     whiteboards.length ?
                     whiteboards.map((whiteboard, index) => {
-                        return <a key={index} href={whiteboard[1]} target="_blank" ><div className="paperDiv">
-                        {whiteboard[0]}
-                        </div></a>
+                        return <div className="paperDiv">
+                        <a key={index} href={whiteboard[1]} className="paper-link" target="_blank" >{whiteboard[0]}</a>
+                        {localStorage.getItem('role') === 'tutor' && <div onClick = {() => {handleDelete(index)}}>
+                            <MdDelete />
+                        </div>}
+                        </div>
                     })
                     :
                     <h2>You do not have any whiteboards</h2>

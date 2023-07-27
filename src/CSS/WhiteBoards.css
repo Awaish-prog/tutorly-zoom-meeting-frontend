@@ -18,6 +18,17 @@
     font-weight: bold;
     text-decoration: none;
     font-size: larger;
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.paper-link {
+    color: black
+}
+.paper-link:hover {
+    color: var(--yellow)
 }
 .loaderDiv {
     display: flex;
