@@ -1,4 +1,4 @@
-const url = "/"
+const url = "http://localhost:4005/"
 
 async function getPreviousMeetings(email, role, number){
     const token = localStorage.getItem("token")
@@ -22,6 +22,8 @@ async function getUpcomingMeetings(email, role, number){
     })
     return await response.json()
 }
+
+
 
 async function getAvailability(date, apId){
     const token = localStorage.getItem("token")
@@ -115,6 +117,40 @@ async function createWhiteboardData(paperName, paperLink, tutorEmail, studentEma
     return await response.json()
 }
 
+async function createBitpaper(paperName, tutorEmail, studentEmail, dateAndTime){
+    const token = localStorage.getItem("token")
+    const email = localStorage.getItem("email")
+    const response = await fetch(`${url}createBitpaper`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "token": token,
+            "email": email
+        },
+        body : JSON.stringify({
+            paperName, tutorEmail, studentEmail, dateAndTime
+        })
+    })
+    return await response.json()
+}
+
+async function deleteBitpaper(paperid){
+    const token = localStorage.getItem("token")
+    const email = localStorage.getItem("email")
+    const response = await fetch(`${url}deleteBitpaper`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "token": token,
+            "email": email
+        },
+        body : JSON.stringify({
+            paperid
+        })
+    })
+    console.log(response);
+}
+
 async function getBoardsList(){
     const token = localStorage.getItem("token")
     const email = localStorage.getItem("email")
@@ -151,4 +187,4 @@ async function deleteWhiteboard(paperLink){
     return await response.json()
 }
 
-export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId, getDashboardDatafromServer, loginUser, createWhiteboardData, getBoardsList, deleteWhiteboard }
+export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId, getDashboardDatafromServer, loginUser, createWhiteboardData, getBoardsList, deleteWhiteboard, createBitpaper, deleteBitpaper }

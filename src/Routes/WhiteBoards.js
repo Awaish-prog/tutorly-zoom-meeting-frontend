@@ -11,7 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import CryptoJS from 'crypto-js';
 import { secretKey } from "../Secret";
 import Loader from "../Components/Loader"
-import { createWhiteboardData, deleteWhiteboard, getBoardsList } from "../apiCalls/apiCalls";
+import { createBitpaper, createWhiteboardData, deleteBitpaper, deleteWhiteboard, getBoardsList } from "../apiCalls/apiCalls";
 import CircularProgress from '@mui/material/CircularProgress';
 import { MdDelete } from "react-icons/md"
 
@@ -29,9 +29,11 @@ export default function WhiteBoards(){
     const [ formLoader, setFormLoader ] = useState(false)
     const [ deleteOpen, setDeleteOpen ] = useState(false)
     const [ deleteIndex, setDeleteIndex ] = useState(-1)
+    const [ paperType, setPaperType ] = useState("paper")
     
-    const handleClickOpen = () => {
+    const handleClickOpen = (type = 'paper') => {
         setOpen(true);
+        setPaperType(type)
         const tutorEmail = localStorage.getItem('email') 
         const tutorName = tutorEmail.slice(0, tutorEmail.indexOf('@'))
         const date = new Date()
@@ -42,6 +44,7 @@ export default function WhiteBoards(){
     const handleClose = () => {
         setOpen(false);
         setMessage(false)
+        setErrorMessage("")
     };
 
     function handleDelete(index){
@@ -69,23 +72,20 @@ export default function WhiteBoards(){
 
         const paperLink = address + encryptedKey
 
-        const response = await createWhiteboardData(paperName, paperLink, email, studentEmail, dateString, "")
+        const response = paperType === 'bitpaper' ? await createBitpaper(paperName, email, studentEmail, dateString) : await createWhiteboardData(paperName, paperLink, email, studentEmail, dateString, "")
 
         setFormLoader(false)
-
         
-
         if(response.status && response.status === 200){
-            const newWindow = window.open(paperLink, '_blank');
-            newWindow.postMessage(localStorage.getItem('role'), '*');
-            newWindow.opener = null;
+            const newWindow = window.open(paperType === 'bitpaper' ? response.data.urls.admin : paperLink, '_blank');
             
+            newWindow.opener = null;
             setOpen(false)
         }
         else{
             setErrorMessage("Page wasn't created because of an unexpected error")
         }
-        setOpen(false)
+        
     }
 
     const handleCreate = async () => {
@@ -104,21 +104,21 @@ export default function WhiteBoards(){
 
         const paperLink = address + encryptedKey
 
-        const response = await createWhiteboardData(paperName, paperLink, email, studentEmail, dateString, "")
+        const response = paperType === 'bitpaper' ? await createBitpaper(paperName, email, studentEmail, dateString) : await createWhiteboardData(paperName, paperLink, email, studentEmail, dateString, "")
 
         setFormLoader(false)
         
         if(response.status && response.status === 200){
-            const newWindow = window.open(paperLink, '_blank');
-            newWindow.postMessage(localStorage.getItem('role'), '*');
+            const newWindow = window.open(paperType === 'bitpaper' ? response.data.urls.admin : paperLink, '_blank');
+            
             newWindow.opener = null;
             setOpen(false)
         }
         else{
             setErrorMessage("Page wasn't created because of an unexpected error")
         }
-        setOpen(false)
-
+        
+        setPaperType('paper')
     }
 
     const handleStudentEmail = (e) => {
@@ -137,13 +137,17 @@ export default function WhiteBoards(){
 
     async function deletePaperApiCall(){
         if(deleteIndex >= 0 && whiteboards[deleteIndex] && whiteboards[deleteIndex][1]){
+            setDeleteOpen(false)
+            console.log(whiteboards[deleteIndex][1]);
+            if(whiteboards[deleteIndex][1].includes(" ")){
+                deleteBitpaper(whiteboards[deleteIndex][1].slice(0, whiteboards[deleteIndex][1].indexOf(" ")))
+            }
+            deleteWhiteboard(whiteboards[deleteIndex][1])
             setWhiteBoards((prev) => {
                 const newBoards = [...prev]
                 newBoards.splice(deleteIndex, 1)
                 return newBoards
             })
-            setDeleteOpen(false)
-            const response = await deleteWhiteboard(whiteboards[deleteIndex][1])
         }
         setDeleteOpen(false)
     }
@@ -157,7 +161,10 @@ export default function WhiteBoards(){
             <Dialog open = {open}>
                 {
                     errorMessage ? 
+                    <>
                     <DialogTitle>{errorMessage}</DialogTitle>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    </>
                     :
                     <>
                     <DialogTitle>Create New Paper</DialogTitle>
@@ -198,6 +205,7 @@ export default function WhiteBoards(){
             <div className="whiteboardDiv">
             <h1>Whiteboards</h1>
             <div className="newBoardButtonContainer">
+            {localStorage.getItem('role') === "tutor" && <button className="newBoardButton" onClick={() => handleClickOpen('bitpaper')}>Create Bit paper</button>}
             {localStorage.getItem('role') === "tutor" && <button className="newBoardButton" onClick={handleClickOpen}>Create New Whiteboard</button>}
             </div>
             {
@@ -210,8 +218,8 @@ export default function WhiteBoards(){
                 {
                     whiteboards.length ?
                     whiteboards.map((whiteboard, index) => {
-                        return <div className="paperDiv">
-                        <a key={index} href={whiteboard[1]} className="paper-link" target="_blank" >{whiteboard[0]}</a>
+                        return <div key={index} className="paperDiv">
+                        <a href={whiteboard[1].includes(" ") ? localStorage.getItem('role') !== "tutor" ? whiteboard[1].slice(whiteboard[1].indexOf(" ") + 1, whiteboard[1].lastIndexOf(" ")) : whiteboard[1].slice(whiteboard[1].lastIndexOf(" ") + 1) : whiteboard[1]} className="paper-link" target="_blank" >{whiteboard[0]}</a>
                         {localStorage.getItem('role') === 'tutor' && <div onClick = {() => {handleDelete(index)}}>
                             <MdDelete />
                         </div>}
