@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Menu from "../Components/Menu";
 import "../CSS/Dashboard.css"
+import "../CSS/WhiteBoards.css"
 import { getDashboardDatafromServer, getUpcomingMeetings } from "../apiCalls/apiCalls";
 import callUs from "../Images/callUs.png"
 import folder from "../Images/folder.png"
@@ -55,6 +56,9 @@ function Dashboard(){
             dashboardData !== "" ?
             <div className="list-of-students">
             <h1>Welcome, {email.substring(0, 1).toUpperCase() + email.substring(1, email.indexOf("@"))}</h1>
+            <div className="newBoardButtonContainer">
+            {localStorage.getItem('role') === "tutor" && <a href="https://www.notion.so/mytutorly/Tutorly-s-Tutor-Wiki-3210fef0cccd4e10a1f1f692316c6116" target="_blank"><button className="newBoardButton">Tutorly's Tutor Wiki</button></a>}
+            </div>
             <h2>List of Students</h2>
             {dashboardData.studentsList.length ? <div className="student-list-container">
             {

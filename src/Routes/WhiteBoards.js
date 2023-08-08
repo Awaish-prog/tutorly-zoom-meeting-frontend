@@ -206,7 +206,7 @@ export default function WhiteBoards(){
             <h1>Whiteboards</h1>
             <div className="newBoardButtonContainer">
             {localStorage.getItem('role') === "tutor" && <button className="newBoardButton" onClick={() => handleClickOpen('bitpaper')}>Create Bit paper</button>}
-            {localStorage.getItem('role') === "tutor" && <button className="newBoardButton" onClick={handleClickOpen}>Create New Whiteboard</button>}
+            {/* {localStorage.getItem('role') === "tutor" && <button className="newBoardButton" onClick={handleClickOpen}>Create New Whiteboard</button>} */}
             </div>
             {
                 loader ?
