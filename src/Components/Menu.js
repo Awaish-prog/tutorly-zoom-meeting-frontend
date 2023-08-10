@@ -34,10 +34,7 @@ export default function Menu(){
                 {localStorage.getItem("role") === "tutor" && <Link className="link" to="/payroll"><li>Payroll</li></Link>}
                 <Link className="link" to="/whiteboards"><li>Whiteboards</li></Link>
                 {
-                    (email === "awaish@tutorly.com" ||
-                    email === "awaish@mytutorly.com" ||
-                    email === "narinder@tutorly.com" ||
-                    email === "narinder@mytutorly.com") &&
+                    (email.toLowerCase().includes("tutorly")) &&
                     <Link className="link" to="/checkLoginId"><li>Check Login Id</li></Link>
                 }
                 <li><button className="logout" onClick={logout}>Logout</button></li>
@@ -63,10 +60,7 @@ export default function Menu(){
                 {localStorage.getItem("role") === "tutor" && <Link onClick={() => setOpen(false)} className="link" to="/payroll"><li>Payroll</li></Link>}
                 <Link className="link" to="/whiteboards"><li>Whiteboards</li></Link>
                 {
-                    (email === "awaish@tutorly.com" ||
-                    email === "awaish@mytutorly.com" ||
-                    email === "narinder@tutorly.com" ||
-                    email === "narinder@mytutorly.com") &&
+                    (email.toLowerCase().includes("tutorly")) &&
                     <Link className="link" to="/checkLoginId"><li>Check Login Id</li></Link>
                 }
                 <li><button className="logout" onClick={logout}>Logout</button></li>
