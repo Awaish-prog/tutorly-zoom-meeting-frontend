@@ -1,0 +1,25 @@
+:root {
+    --yellow: #FFC701;
+    --blue: #1718F1;
+    --black: #000000;
+}
+
+.custom-table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid var(--black);
+    color: var(--blue);
+}
+  
+.custom-table th, .custom-table td {
+    border: 1px solid var(--black);
+    padding: 8px;
+    text-align: left;
+    width: fit-content;
+    white-space: nowrap;
+}
+  
+.custom-table th {
+    background-color: var(--yellow);
+}
+

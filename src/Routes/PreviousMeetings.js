@@ -20,6 +20,13 @@ export default function PreviousMeetings(){
         response2.status === 200 && setMeetings(response2.meetings)
         
     }
+    function changeLabel(label, index){
+        setMeetings((prev) => {
+            const newMeetings = [...prev]
+            newMeetings[index]["labels"] = label
+            return newMeetings
+        })
+    }
 
     useEffect(() => {
         if(!localStorage.getItem("email")){
@@ -36,7 +43,7 @@ export default function PreviousMeetings(){
                 <div className="loader-container"><Loader size={100} /></div> :
                 meetings.length === 0 ? 
                 <h1 className="meeting-message">You don't have any previous meetings</h1> :
-                <Meetings meetings={meetings} role={localStorage.getItem("role")} previous={true} />
+                <Meetings meetings={meetings} role={localStorage.getItem("role")} previous={true} changeLabel = {changeLabel} />
             }
         </div>
     )

@@ -1,4 +1,4 @@
-const url = "/"
+const url = "http://localhost:4005/"
 
 async function getPreviousMeetings(email, role, number){
     const token = localStorage.getItem("token")
@@ -71,6 +71,23 @@ async function cancelAppointmentWithId(id){
     return await response.json()
 }
 
+async function markStatus(labels, meetingId){
+    const token = localStorage.getItem("token")
+    const email = localStorage.getItem("email")
+    const response = await fetch(`${url}markStatus`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+            "token": token,
+            "email": email
+        },
+        body : JSON.stringify({
+            labels, meetingId
+        })
+    })
+    return await response.json()
+}
+
 async function getDashboardDatafromServer(email, roleStudent){
     const token = localStorage.getItem("token")
     const role = roleStudent ? roleStudent : localStorage.getItem("role")
@@ -95,6 +112,23 @@ async function loginUser(email, role, id){
         },
         body : JSON.stringify({
             email, role, id
+        })
+    })
+    return await response.json()
+}
+
+async function getPayroll(from, to){
+    const token = localStorage.getItem("token")
+    const email = localStorage.getItem("email").toLowerCase()
+    const response = await fetch(`${url}getPayroll`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "token": token,
+            "email": email
+        },
+        body : JSON.stringify({
+            email, from, to
         })
     })
     return await response.json()
@@ -187,4 +221,4 @@ async function deleteWhiteboard(paperLink){
     return await response.json()
 }
 
-export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId, getDashboardDatafromServer, loginUser, createWhiteboardData, getBoardsList, deleteWhiteboard, createBitpaper, deleteBitpaper }
+export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId, getDashboardDatafromServer, loginUser, createWhiteboardData, getBoardsList, deleteWhiteboard, createBitpaper, deleteBitpaper, getPayroll, markStatus }

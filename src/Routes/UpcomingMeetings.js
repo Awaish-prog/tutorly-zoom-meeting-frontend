@@ -20,6 +20,14 @@ export default function UpcomingMeetings(){
         const response2 = await getUpcomingMeetings(localStorage.getItem("email"), localStorage.getItem("role"), 2147483647)
         setMeetings(response2.meetings)
     }
+
+    function changeLabel(label, index){
+        setMeetings((prev) => {
+            const newMeetings = [...prev]
+            newMeetings[index]["labels"] = label
+            return newMeetings
+        })
+    }
     
 
     useEffect(() => {
@@ -37,7 +45,7 @@ export default function UpcomingMeetings(){
                 <div className="loader-container"><Loader size={100} /></div> :
                 meetings.length === 0 ? 
                 <h1 className="meeting-message">You don't have any upcoming meetings</h1> :
-                <Meetings meetings={meetings} role={localStorage.getItem("role")} previous={false} />
+                <Meetings meetings={meetings} role={localStorage.getItem("role")} previous={false} changeLabel = {changeLabel} />
             }
         </div>
     )

@@ -3,7 +3,7 @@ import "../CSS/Meetings.css"
 import Meeting from "./Meeting";
 
 
-export default function Meetings({ meetings, role, previous }){
+export default function Meetings({ meetings, role, previous, changeLabel }){
 
     const timeZones = [['PST', 'America/Los_Angeles'],[ 'EST', 'America/New_York'], [ 'CST', 'America/Chicago'], ['IST', 'Asia/Kolkata'], ['MST', 'America/Denver']]
     const [ timeZone, setTimeZone ] = useState({ timeZone: 'America/Los_Angeles' })
@@ -31,7 +31,7 @@ export default function Meetings({ meetings, role, previous }){
             <div className="meetings-list">
             {
                 meetings.map((meeting, index) => {
-                    return <Meeting key={index} meeting={meeting} role={role} previous={previous} timeZone={timeZone} />
+                    return <Meeting key={index} meeting={meeting} role={role} previous={previous} timeZone={timeZone} changeLabel = {changeLabel} index = {index} id = {meeting.id} />
                 })
             }
             </div>

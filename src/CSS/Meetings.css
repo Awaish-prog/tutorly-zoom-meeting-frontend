@@ -63,6 +63,24 @@ optgroup {
     margin: auto;
     margin-top: 50px;
 }
+.status {
+    padding: 5px 10px;
+}
+.status-select {
+    border: none;
+    font-size: medium;
+    cursor: pointer;
+}
+.status-select:focus {
+    border: none;
+    outline: none;
+}
+.select-option {
+    font-size: large;
+    padding: 10px;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 850px) {
     .meetings {
         flex-direction: column;

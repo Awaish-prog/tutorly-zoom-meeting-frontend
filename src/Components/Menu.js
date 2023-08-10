@@ -31,6 +31,7 @@ export default function Menu(){
                 <Link className="link" to="/dashboard"><li>Dashboard</li></Link>
                 <Link className="link" to="/previousMeetings"><li>Previous Meetings</li></Link>
                 <Link className="link" to="/upcomingMeetings"><li>Upcoming Meetings</li></Link>
+                {localStorage.getItem("role") === "tutor" && <Link className="link" to="/payroll"><li>Payroll</li></Link>}
                 <Link className="link" to="/whiteboards"><li>Whiteboards</li></Link>
                 {
                     (email === "awaish@tutorly.com" ||
@@ -59,6 +60,7 @@ export default function Menu(){
                 <Link onClick={() => setOpen(false)} className="link" to="/dashboard"><li>Dashboard</li></Link>
                 <Link onClick={() => setOpen(false)} className="link" to="/previousMeetings"><li>Previous Meetings</li></Link>
                 <Link onClick={() => setOpen(false)} className="link" to="/upcomingMeetings"><li>Upcoming Meetings</li></Link>
+                {localStorage.getItem("role") === "tutor" && <Link onClick={() => setOpen(false)} className="link" to="/payroll"><li>Payroll</li></Link>}
                 <Link className="link" to="/whiteboards"><li>Whiteboards</li></Link>
                 {
                     (email === "awaish@tutorly.com" ||

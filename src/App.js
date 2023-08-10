@@ -7,6 +7,7 @@ import Dashboard from "./Routes/Dashboard";
 import CheckStudentId from "./Routes/CheckStudentId";
 import DashboardTutor from "./Routes/DashboardTutor";
 import WhiteBoards from "./Routes/WhiteBoards";
+import Payroll from "./Routes/Payroll";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route path="/checkLoginId" element = {<CheckStudentId />} />
       <Route path="/dashboardTutor" element = {<DashboardTutor />} />
       <Route path="/whiteboards" element = {<WhiteBoards />} />
+      <Route path="/payroll" element = {<Payroll />} />
     </Routes>
   );
 }
