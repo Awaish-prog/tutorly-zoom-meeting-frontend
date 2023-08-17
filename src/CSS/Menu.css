@@ -2,6 +2,7 @@
     /* background-color: rgb(251, 251, 195); */
     background-color: var(--blue);
     overflow-y: auto;
+    min-width: 270px;
 }
 .menu-options {
     font-size: 1.2rem;
@@ -17,6 +18,17 @@
     margin: 10px 0;
     padding: 10px;
     color: white;
+}
+.unread-dot-menu {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgb(137, 10, 10);
+}
+
+.slack-menu {
+    display: flex;
+    gap: 10px;
 }
 .menu-options > .link > li:hover {
     background-color: var(--yellow);

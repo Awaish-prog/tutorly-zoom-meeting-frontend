@@ -12,7 +12,7 @@ import Menu from "../Components/Menu";
 import { useLocation, useNavigate } from "react-router-dom";
 
 
-export default function DashboardTutor(){
+export default function DashboardTutor({ notify, updateNotification }){
     const location = useLocation()
     const navigate = useNavigate()
     const [ dashboardData, setDashboardData ] = useState("")
@@ -43,7 +43,7 @@ export default function DashboardTutor(){
 
     return (
         <div className="dashboard">
-            <Menu />
+            <Menu notify = {notify} updateNotification = {updateNotification} />
             {
             showLoader ? 
             <div className="loader-container"><Loader size={100} /></div> :

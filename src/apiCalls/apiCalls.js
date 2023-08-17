@@ -1,4 +1,4 @@
-const url = "http://localhost:4005/"
+const url = "https://app.tutorly.com/"
 
 async function getPreviousMeetings(email, role, number){
     const token = localStorage.getItem("token")
@@ -23,6 +23,41 @@ async function getUpcomingMeetings(email, role, number){
     return await response.json()
 }
 
+async function getChannelsListApi(){
+    const token = localStorage.getItem("token")
+    const emailToken = localStorage.getItem("email")
+    const response = await fetch(`${url}getChannelsList/${emailToken}`, {
+        headers: {
+            "token": token,
+            "email": emailToken
+        }
+    })
+    return await response.json()
+}
+
+async function getChatApi(channel){
+    const token = localStorage.getItem("token")
+    const emailToken = localStorage.getItem("email")
+    const response = await fetch(`${url}getChat/${channel}`, {
+        headers: {
+            "token": token,
+            "email": emailToken
+        }
+    })
+    return await response.json()
+}
+
+async function getRepliesApi(channel, ts){
+    const token = localStorage.getItem("token")
+    const emailToken = localStorage.getItem("email")
+    const response = await fetch(`${url}getReplies/${channel}/${ts}`, {
+        headers: {
+            "token": token,
+            "email": emailToken
+        }
+    })
+    return await response.json()
+}
 
 
 async function getAvailability(date, apId){
@@ -98,6 +133,16 @@ async function getDashboardDatafromServer(email, roleStudent){
             "email": emailToken
         }
     })
+    return await response.json()
+}
+
+async function updateNotificationApi(){
+    
+    const email = localStorage.getItem("email")
+    if(!email){
+        return false
+    }
+    const response = await fetch(`${url}getNotification/${email}`)
     return await response.json()
 }
 
@@ -221,4 +266,4 @@ async function deleteWhiteboard(paperLink){
     return await response.json()
 }
 
-export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId, getDashboardDatafromServer, loginUser, createWhiteboardData, getBoardsList, deleteWhiteboard, createBitpaper, deleteBitpaper, getPayroll, markStatus }
+export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId, getDashboardDatafromServer, loginUser, createWhiteboardData, getBoardsList, deleteWhiteboard, createBitpaper, deleteBitpaper, getPayroll, markStatus, getChannelsListApi, getChatApi, getRepliesApi, updateNotificationApi }

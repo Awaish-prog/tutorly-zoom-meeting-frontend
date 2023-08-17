@@ -5,10 +5,10 @@ import "../CSS/Menu.css"
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
-export default function Menu(){
+export default function Menu({ notify, updateNotification }){
 
     const email = localStorage.getItem("email") ? localStorage.getItem("email").toLowerCase() : "email"
     const [open, setOpen] = useState(false)
@@ -21,6 +21,14 @@ export default function Menu(){
         navigate("/")
     }
 
+    function updateNotificationTrigger(){
+        updateNotification()
+    }
+
+    useEffect(() => {
+        updateNotification()
+    }, [])
+
     return (
     <>
         <div className="menu">
@@ -28,15 +36,23 @@ export default function Menu(){
                 <img src = {tutorlyLogo} alt="Logo" width="200px" />
             </div>
             <ul className="menu-options">
-                <Link className="link" to="/dashboard"><li>Dashboard</li></Link>
-                <Link className="link" to="/previousMeetings"><li>Previous Meetings</li></Link>
-                <Link className="link" to="/upcomingMeetings"><li>Upcoming Meetings</li></Link>
-                {localStorage.getItem("role") === "tutor" && <Link className="link" to="/payroll"><li>Payroll</li></Link>}
-                <Link className="link" to="/whiteboards"><li>Whiteboards</li></Link>
+                <Link className="link" to="/dashboard"><li onClick={updateNotificationTrigger}>Dashboard</li></Link>
+
+                <Link className="link" to="/previousMeetings"><li onClick={updateNotificationTrigger}>Previous Meetings</li></Link>
+
+                <Link className="link" to="/upcomingMeetings"><li onClick={updateNotificationTrigger}>Upcoming Meetings</li></Link>
+
+                {localStorage.getItem("role") === "tutor" && <Link className="link" to="/payroll"><li onClick={updateNotificationTrigger}>Payroll</li></Link>}
+
+                <Link className="link" to="/whiteboards"><li onClick={updateNotificationTrigger}>Whiteboards</li></Link>
+
+                <Link className="link" to="/slack"><li className="slack-menu" onClick={updateNotificationTrigger}>Slack {notify && <div className="unread-dot-menu"></div>}</li></Link>
+
                 {
                     (email.toLowerCase().includes("tutorly")) &&
-                    <Link className="link" to="/checkLoginId"><li>Check Login Id</li></Link>
+                    <Link className="link" to="/checkLoginId"><li onClick={updateNotificationTrigger}>Check Login Id</li></Link>
                 }
+
                 <li><button className="logout" onClick={logout}>Logout</button></li>
             </ul>
         </div>
@@ -54,15 +70,23 @@ export default function Menu(){
                 <span className="close-button"><CloseIcon onClick={() => setOpen(false)} /></span>
             </div>
             <ul className="menu-options">
-                <Link onClick={() => setOpen(false)} className="link" to="/dashboard"><li>Dashboard</li></Link>
-                <Link onClick={() => setOpen(false)} className="link" to="/previousMeetings"><li>Previous Meetings</li></Link>
-                <Link onClick={() => setOpen(false)} className="link" to="/upcomingMeetings"><li>Upcoming Meetings</li></Link>
-                {localStorage.getItem("role") === "tutor" && <Link onClick={() => setOpen(false)} className="link" to="/payroll"><li>Payroll</li></Link>}
-                <Link className="link" to="/whiteboards"><li>Whiteboards</li></Link>
+                <Link onClick={() => setOpen(false)} className="link" to="/dashboard"><li onClick={updateNotificationTrigger}>Dashboard</li></Link>
+
+                <Link onClick={() => setOpen(false)} className="link" to="/previousMeetings"><li onClick={updateNotificationTrigger}>Previous Meetings</li></Link>
+
+                <Link onClick={() => setOpen(false)} className="link" to="/upcomingMeetings"><li onClick={updateNotificationTrigger}>Upcoming Meetings</li></Link>
+
+                {localStorage.getItem("role") === "tutor" && <Link onClick={() => setOpen(false)} className="link" to="/payroll"><li onClick={updateNotificationTrigger}>Payroll</li></Link>}
+
+                <Link className="link" to="/whiteboards"><li onClick={updateNotificationTrigger}>Whiteboards</li></Link>
+
+                <Link className="link" to="/slack"><li className="slack-menu" onClick={updateNotificationTrigger}>Slack {notify && <div className="unread-dot-menu"></div>}</li></Link>
+
                 {
                     (email.toLowerCase().includes("tutorly")) &&
-                    <Link className="link" to="/checkLoginId"><li>Check Login Id</li></Link>
+                    <Link className="link" to="/checkLoginId"><li onClick={updateNotificationTrigger}>Check Login Id</li></Link>
                 }
+
                 <li><button className="logout" onClick={logout}>Logout</button></li>
             </ul>
             </div>

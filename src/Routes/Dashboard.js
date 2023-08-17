@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import cellPhoneIcon from "../Images/cellPhoneicon.png" 
 import ixlLogin from "../Images/ixlLogin.png"
 
-function Dashboard(){
+function Dashboard({ notify, updateNotification }){
     
     const [ dashboardData, setDashboardData ] = useState("")
     const [ dashboardUpcomingMeetings, setDashboardUpcomingMeetings ] = useState([])
@@ -48,7 +48,7 @@ function Dashboard(){
 
     console.log(dashboardData.ixlCredentials);
     return <div className="dashboard">
-        <Menu />
+        <Menu notify = {notify} updateNotification = {updateNotification} />
         {   
             role === "tutor" ?
             showLoader ? 

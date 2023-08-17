@@ -49,9 +49,9 @@
 }
 .newBoardButtonContainer {
     display: flex;
-    width: 100%;
+    width: 97%;
     justify-content: right;
-    margin: 10px 0 10px 0;
+    margin: 10px 20px 10px 0;
 }
 .newBoardButton {
     border: none;

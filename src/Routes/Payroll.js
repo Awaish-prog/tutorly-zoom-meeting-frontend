@@ -5,7 +5,7 @@ import { getPayroll } from "../apiCalls/apiCalls";
 import TableComponent from "../Components/TableComponent";
 import Loader from "../Components/Loader";
 
-export default function Payroll(){
+export default function Payroll({ notify, updateNotification }){
 
     const [ from, setFrom ] = useState("")
     const [ to, setTo ] = useState("")
@@ -60,17 +60,17 @@ export default function Payroll(){
       }
 
     return <div className="payroll">
-        <Menu />
+        <Menu notify = {notify} updateNotification = {updateNotification} />
         <div>
             <h1>Payroll</h1>
             <form className="payroll-form" onSubmit={submitForm}>
                 <div>
                     <label>From: </label>
-                    <input type="date" value={from} onChange={changeFrom} />
+                    <input type="date" value={from} onChange={changeFrom} placeholder="mm/dd/yy" />
                 </div>
                 <div>
                     <label>To: </label>
-                    <input type="date" value={to} onChange={changeTo} />
+                    <input type="date" value={to} onChange={changeTo} placeholder="mm/dd/yy" />
                 </div>
                 {loader ? <Loader size = {40} /> : <input className="submit" type="submit" />}
             </form>
