@@ -1,11 +1,14 @@
 import { useNavigate } from "react-router-dom"
 import "../CSS/Meetings.css"
 import { markStatus } from "../apiCalls/apiCalls"
+import { useEffect, useState } from "react"
 
 
 export default function Meeting({ meeting, role, previous, timeZone, changeLabel, index, id
  }){
     const navigate = useNavigate()
+
+    const [ options, setOptions ] = useState([])
 
     const styles = {
         Completed: {
@@ -68,9 +71,43 @@ export default function Meeting({ meeting, role, previous, timeZone, changeLabel
     }
 
     async function changeStatus(e, index){
+        if(!styles[e.target.value]){
+            return
+        }
         changeLabel(styles[e.target.value]["status"], index)
         const res = await markStatus(styles[e.target.value]["status"], id)
     }
+
+    useEffect(() => {
+        if(meeting.labels){
+            setOptions((prev) => {
+                const newOptions = [...prev]
+                newOptions.push(meeting.labels[0].name)
+                const keys = Object.keys(styles)
+                for(let i = 0; i < keys.length; i++){
+                    if(keys[i] !== meeting.labels[0].name && keys[i] !== "unavailable"){
+                        newOptions.push(keys[i])
+                    }
+                }
+                return newOptions
+            })
+        }
+        else{
+            setOptions((prev) => {
+                const newOptions = [...prev]
+                newOptions.push("Scheduled")
+                const keys = Object.keys(styles)
+                for(let i = 0; i < keys.length; i++){
+                    if(keys[i] !== "unavailable"){
+                        newOptions.push(keys[i])
+                    }
+                    
+                }
+                return newOptions
+            })   
+        }
+    }, [])
+    
     return (
         <div onClick = {() => gotoMeetingDetails(meeting)} className="meeting">
             <p>{meeting.type}</p>
@@ -81,16 +118,16 @@ export default function Meeting({ meeting, role, previous, timeZone, changeLabel
                 {/* {meeting.labels[0].name} */}
             <select onClick={stopPropagate} style={styles[meeting.labels[0].name]} className="status-select" onChange={(e) => {changeStatus(e, index)}}>
                 {
-                    Object.keys(styles).map((option, i) => {
+                    options.map((option, i) => {
                         return option !== "unavailable" && <option className = "select-option" key={i} style={styles[option]} value={option} >{option}</option>
                     })
                 }
      
             </select></span></p>
             :
-            <p>status: <span>Scheduled<select onChange={(e) => {changeStatus(e, index)}} style={styles.unavailable} className="status-select">
+            <p>status: <span><select onClick={stopPropagate} onChange={(e) => {changeStatus(e, index)}} style={styles.unavailable} className="status-select">
                 {
-                    Object.keys(styles).map((option, i) => {
+                    options.map((option, i) => {
                         return option !== "unavailable" && <option className = "select-option" key={i} style={styles[option]} value={option} >{option}</option> 
                     })
                 }

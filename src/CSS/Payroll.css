@@ -6,7 +6,7 @@
     align-items: center;
 }
 .table-container {
-    width: 80vw;
+    width: 75vw;
     max-height: 63vh;
     overflow: scroll;
     border: 1px solid black;

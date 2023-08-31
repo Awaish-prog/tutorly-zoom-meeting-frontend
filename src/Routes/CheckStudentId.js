@@ -6,7 +6,7 @@ import "../CSS/Login.css"
 import { useNavigate } from "react-router-dom"
 
 
-export default function CheckStudentId({ notify, updateNotification }){
+export default function CheckStudentId({ notify, updateNotification, setNotification }){
 
     const [ studentEmail, setStudentEmail ] = useState("")
     const [ id, setId ] = useState("")
@@ -27,7 +27,7 @@ export default function CheckStudentId({ notify, updateNotification }){
 
     return (
         <div className="dashboard">
-            <Menu notify = {notify} updateNotification = {updateNotification} />
+            <Menu notify = {notify} updateNotification = {updateNotification} setNotification={setNotification} />
             <div className="dashboard-container">
                 <h1>View Login Id</h1>
 

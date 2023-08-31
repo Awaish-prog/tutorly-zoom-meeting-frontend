@@ -7,7 +7,7 @@ import Loader from "../Components/Loader"
 import { useNavigate } from "react-router-dom"
 
 
-export default function UpcomingMeetings({ notify, updateNotification }){
+export default function UpcomingMeetings({ notify, updateNotification, setNotification }){
     
     const [ meetings, setMeetings ] = useState([])
     const [ showLoader, setShowLoader ] = useState(true)
@@ -39,7 +39,7 @@ export default function UpcomingMeetings({ notify, updateNotification }){
 
     return (
         <div className="meetings">
-            <Menu notify = {notify} updateNotification = {updateNotification}/>
+            <Menu notify = {notify} updateNotification = {updateNotification} setNotification={setNotification}/>
             {
                 showLoader ? 
                 <div className="loader-container"><Loader size={100} /></div> :

@@ -5,10 +5,12 @@ import "../CSS/Menu.css"
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
 import CloseIcon from "@mui/icons-material/Close";
+import { io } from "socket.io-client";
 import { useEffect, useState } from "react";
+import { url } from "../apiCalls/apiCalls";
 
 
-export default function Menu({ notify, updateNotification }){
+export default function Menu({ notify, updateNotification, setNotification }){
 
     const email = localStorage.getItem("email") ? localStorage.getItem("email").toLowerCase() : "email"
     const [open, setOpen] = useState(false)
@@ -26,7 +28,26 @@ export default function Menu({ notify, updateNotification }){
     }
 
     useEffect(() => {
-        updateNotification()
+        if(!window.location.href.toLowerCase().endsWith("slack")){
+            updateNotification()
+        }
+
+        const socket = io("https://app.tutorly.com/"); 
+
+        socket.on("sendNotification", () => {
+        
+            if(!window.location.href.toLowerCase().endsWith('slack')){
+                if(setNotification){
+                    setNotification(true)
+                }
+            }
+            
+        })
+
+        return () => {
+            socket.off("sendNotification")
+        }
+        
     }, [])
 
     return (
@@ -46,7 +67,7 @@ export default function Menu({ notify, updateNotification }){
 
                 <Link className="link" to="/whiteboards"><li onClick={updateNotificationTrigger}>Whiteboards</li></Link>
 
-                <Link className="link" to="/slack"><li className="slack-menu" onClick={updateNotificationTrigger}>Slack {notify && <div className="unread-dot-menu"></div>}</li></Link>
+                <Link className="link" to="/slack"><li className="slack-menu" >Slack {notify && <div className="unread-dot-menu"></div>}</li></Link>
 
                 {
                     (email.toLowerCase().includes("tutorly")) &&
@@ -80,7 +101,7 @@ export default function Menu({ notify, updateNotification }){
 
                 <Link className="link" to="/whiteboards"><li onClick={updateNotificationTrigger}>Whiteboards</li></Link>
 
-                <Link className="link" to="/slack"><li className="slack-menu" onClick={updateNotificationTrigger}>Slack {notify && <div className="unread-dot-menu"></div>}</li></Link>
+                <Link className="link" to="/slack"><li className="slack-menu" >Slack {notify && <div className="unread-dot-menu"></div>}</li></Link>
 
                 {
                     (email.toLowerCase().includes("tutorly")) &&

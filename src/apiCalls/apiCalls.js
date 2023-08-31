@@ -1,4 +1,4 @@
-const url = "https://app.tutorly.com/"
+const url = "/"
 
 async function getPreviousMeetings(email, role, number){
     const token = localStorage.getItem("token")
@@ -35,10 +35,10 @@ async function getChannelsListApi(){
     return await response.json()
 }
 
-async function getChatApi(channel){
+async function getSlackFileUrlApi(fileId){
     const token = localStorage.getItem("token")
     const emailToken = localStorage.getItem("email")
-    const response = await fetch(`${url}getChat/${channel}`, {
+    const response = await fetch(`${url}getSlackFileUrl/${fileId}`, {
         headers: {
             "token": token,
             "email": emailToken
@@ -47,10 +47,22 @@ async function getChatApi(channel){
     return await response.json()
 }
 
-async function getRepliesApi(channel, ts){
+async function getChatApi(channel, privateChat){
     const token = localStorage.getItem("token")
     const emailToken = localStorage.getItem("email")
-    const response = await fetch(`${url}getReplies/${channel}/${ts}`, {
+    const response = await fetch(`${url}getChat/${channel}/${privateChat}`, {
+        headers: {
+            "token": token,
+            "email": emailToken
+        }
+    })
+    return await response.json()
+}
+
+async function getRepliesApi(channel, ts, conversationId, showChannels){
+    const token = localStorage.getItem("token")
+    const emailToken = localStorage.getItem("email")
+    const response = await fetch(`${url}getReplies/${channel}/${ts}/${conversationId}/${showChannels}`, {
         headers: {
             "token": token,
             "email": emailToken
@@ -266,4 +278,4 @@ async function deleteWhiteboard(paperLink){
     return await response.json()
 }
 
-export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId, getDashboardDatafromServer, loginUser, createWhiteboardData, getBoardsList, deleteWhiteboard, createBitpaper, deleteBitpaper, getPayroll, markStatus, getChannelsListApi, getChatApi, getRepliesApi, updateNotificationApi }
+export { getPreviousMeetings, getUpcomingMeetings, getAvailability, rescheduleMeetingWithTime, cancelAppointmentWithId, getDashboardDatafromServer, loginUser, createWhiteboardData, getBoardsList, deleteWhiteboard, createBitpaper, deleteBitpaper, getPayroll, markStatus, getChannelsListApi, getChatApi, getRepliesApi, updateNotificationApi, getSlackFileUrlApi, url }

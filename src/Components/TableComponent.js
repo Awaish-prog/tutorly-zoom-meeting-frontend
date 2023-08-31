@@ -19,6 +19,7 @@ const TableComponent = ({ data }) => {
             <th>Sr. No</th>
             <th>Date</th>
             <th>Title</th>
+            <th>Status</th>
             <th>Student Name</th>
             <th>Duration</th>
             <th>Rate</th>
@@ -32,6 +33,7 @@ const TableComponent = ({ data }) => {
             <td>{index + 1}</td>
             <td>{item.date}</td>
             <td>{item.type}</td>
+            <td>{item.labels ? item.labels[0].name : "Scheduled"}</td>
             <td>{item.firstName + " " + item.lastName}</td>
             <td>{item.duration} minutes</td>
             <td>{item.category.toLowerCase().includes("person") ? 50 : 25}</td>

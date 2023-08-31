@@ -5,7 +5,7 @@ import { getPayroll } from "../apiCalls/apiCalls";
 import TableComponent from "../Components/TableComponent";
 import Loader from "../Components/Loader";
 
-export default function Payroll({ notify, updateNotification }){
+export default function Payroll({ notify, updateNotification, setNotification }){
 
     const [ from, setFrom ] = useState("")
     const [ to, setTo ] = useState("")
@@ -50,7 +50,10 @@ export default function Payroll({ notify, updateNotification }){
             let pay = 0
             const appointments = res.appointments
             for(let i = 0; i < appointments.length; i++){
-                pay += (Number(appointments[i].duration) / Number(appointments[i].type.toLowerCase().includes("lala") ? 50 : (appointments[i].type.toLowerCase().includes("maple tutoring") ? 35 : 60))) * Number(appointments[i].category.toLowerCase().includes("person") ? 50 : 25)
+                if(appointments[i].labels && (appointments[i].labels[0].name === "Completed" || appointments[i].labels[0].name === "Canceled<24 h" || appointments[i].labels[0].name === "Excused Absence")){
+                    pay += (Number(appointments[i].duration) / Number(appointments[i].type.toLowerCase().includes("lala") ? 50 : (appointments[i].type.toLowerCase().includes("maple tutoring") ? 35 : 60))) * Number(appointments[i].category.toLowerCase().includes("person") ? 50 : 25)
+                }
+                
             }
             setPay(pay)
         } 
@@ -60,7 +63,7 @@ export default function Payroll({ notify, updateNotification }){
       }
 
     return <div className="payroll">
-        <Menu notify = {notify} updateNotification = {updateNotification} />
+        <Menu notify = {notify} updateNotification = {updateNotification} setNotification={setNotification} />
         <div>
             <h1>Payroll</h1>
             <form className="payroll-form" onSubmit={submitForm}>
@@ -74,7 +77,7 @@ export default function Payroll({ notify, updateNotification }){
                 </div>
                 {loader ? <Loader size = {40} /> : <input className="submit" type="submit" />}
             </form>
-            { pay !== 0 && <h2>Total Pay: {pay.toFixed(2)}</h2> }
+            { pay !== 0 && <h2>Total Pay:  ${pay.toFixed(2)}</h2> }
             { message !== "" && <h2>{message}</h2> }
             {appointments.length !== 0 && <div className = "table-container">
                  <TableComponent data = {appointments} />

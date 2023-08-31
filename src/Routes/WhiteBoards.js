@@ -16,7 +16,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { MdDelete } from "react-icons/md"
 
 
-export default function WhiteBoards({ notify, updateNotification }){
+export default function WhiteBoards({ notify, updateNotification, setNotification }){
 
     const [ whiteboards, setWhiteBoards ] = useState([])
     const address = 'https://app.tutorly.com/joinWhiteboard/'
@@ -201,7 +201,7 @@ export default function WhiteBoards({ notify, updateNotification }){
             </Dialog>
 
             
-            <Menu notify = {notify} updateNotification = {updateNotification} />
+            <Menu notify = {notify} updateNotification = {updateNotification} setNotification={setNotification} />
             <div className="whiteboardDiv">
             <h1>Whiteboards</h1>
             <div className="newBoardButtonContainer">
