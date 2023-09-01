@@ -62,6 +62,7 @@ async function getChatApi(channel, privateChat){
 async function getRepliesApi(channel, ts, conversationId, showChannels){
     const token = localStorage.getItem("token")
     const emailToken = localStorage.getItem("email")
+    console.log(`${url}getReplies/${channel}/${ts}/${conversationId}/${showChannels}`);
     const response = await fetch(`${url}getReplies/${channel}/${ts}/${conversationId}/${showChannels}`, {
         headers: {
             "token": token,

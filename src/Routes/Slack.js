@@ -143,7 +143,7 @@ export default function Slack({ notify, updateNotification, setNotification }){
 
     async function getReplies(ts, index, message){
         setScrollItemMessage(message)
-        let conversationId = ""
+        let conversationId = "CEMPTY"
         if(!scrollItemChannel.conversationId){
             for(let i = 0; i < members.length; i++){
                 if(members[i].id === currentChannel){
@@ -154,7 +154,7 @@ export default function Slack({ notify, updateNotification, setNotification }){
         else{
             conversationId = scrollItemChannel.conversationId
         }
-        const res = await getRepliesApi(currentChannel, ts, conversationId, showChannels)
+        const res = conversationId === "CEMPTY" ? await getRepliesApi(currentChannel, ts, conversationId, showChannels) : await getRepliesApi(conversationId, ts, conversationId, showChannels)
         res.status === 200 && setChats((prev => {
             const newChat = {...prev}
             newChat[heading][index]["replies"] = res.chat
