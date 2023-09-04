@@ -607,7 +607,15 @@ export default function Slack({ notify, updateNotification, setNotification }){
                         chats[heading][threadIndex]["replies"].map((message, index) => {
                             return <div key={index} className="message-div">
                             <p className="message-user-ts"><span className="message-user">{message.username}</span> <span className="message-ts">{(new Date(message.ts * 1000)).toLocaleDateString()} {(new Date(message.ts * 1000)).toLocaleTimeString()}</span></p>
-                            <p className="message-text">{message.text}</p>
+                            <p className="message-text" dangerouslySetInnerHTML={{ __html: message.text }} />
+                            {
+                                message.files && message.files.length > 0 && 
+                                message.files.map((file, index) => {
+                                    return <div key={index} >
+                                        <SlackFile file = {file} />
+                                    </div>
+                                })
+                            }
                             </div>
                         })
                         :
@@ -622,7 +630,7 @@ export default function Slack({ notify, updateNotification, setNotification }){
                                 <p className="message-user-ts">
                                     <span className="message-user">{message.username}</span> <span className="message-ts">{(new Date(message.ts * 1000)).toLocaleDateString()} {(new Date(message.ts * 1000)).toLocaleTimeString()}</span>
                                 </p>
-                                <p className="message-text">{message.text}</p>
+                                <p className="message-text" dangerouslySetInnerHTML={{ __html: message.text }} />
                                 {
                                     message.files && message.files.length > 0 && 
                                     message.files.map((file, index) => {
