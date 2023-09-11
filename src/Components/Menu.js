@@ -72,7 +72,7 @@ export default function Menu({ notify, updateNotification, setNotification }){
                 {
                     (email.toLowerCase().includes("tutorly")) &&
                     <>
-                    <Link className="link" to="/slack"><li className="slack-menu" >Slack {notify && <div className="unread-dot-menu"></div>}</li></Link>
+                    {/* <Link className="link" to="/slack"><li className="slack-menu" >Slack {notify && <div className="unread-dot-menu"></div>}</li></Link> */}
                     <Link className="link" to="/checkLoginId"><li onClick={updateNotificationTrigger}>Check Login Id</li></Link>
                     </>
                 }
@@ -109,7 +109,7 @@ export default function Menu({ notify, updateNotification, setNotification }){
                 {
                     (email.toLowerCase().includes("tutorly")) &&
                     <>
-                    <Link className="link" to="/slack"><li className="slack-menu" >Slack {notify && <div className="unread-dot-menu"></div>}</li></Link>
+                    {/* <Link className="link" to="/slack"><li className="slack-menu" >Slack {notify && <div className="unread-dot-menu"></div>}</li></Link> */}
                     <Link className="link" to="/checkLoginId"><li onClick={updateNotificationTrigger}>Check Login Id</li></Link>
                     </>
                 }

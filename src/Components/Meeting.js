@@ -59,6 +59,13 @@ export default function Meeting({ meeting, role, previous, timeZone, changeLabel
             borderRadius: '10px',
             color: 'white',
             status: [ { id: 7238436, name: 'Reschedule<24', color: 'pink' } ]
+        },
+        "Excused Absence" : {
+            status: [{id: 12763262, name: "Excused Absence", color: "yellow"}],
+            color: "white",
+            backgroundColor: '#9c7f06',
+            padding: '5px 10px',
+            borderRadius: '10px',
         }
     }
 

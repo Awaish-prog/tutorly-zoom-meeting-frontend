@@ -6,6 +6,8 @@ import { BiArrowBack } from "react-icons/bi"
 import { BiSolidUserCircle } from "react-icons/bi"
 import "../CSS/Slack.css"
 import SlackFile from "../Components/SlackFile";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 let socket
@@ -544,6 +546,23 @@ export default function Slack({ notify, updateNotification, setNotification }){
         }
     }, [chats])
 
+    const notifyBrowser = () => {
+        // Check if the browser supports notifications
+        if (!("Notification" in window)) {
+          alert("This browser does not support desktop notifications.");
+        } else {
+          // Request permission to display notifications
+          Notification.requestPermission().then((permission) => {
+            if (permission === "granted") {
+              // Create and display a notification
+              new Notification("Hello, Desktop Notification!");
+            } else {
+              alert("You denied permission for desktop notifications.");
+            }
+          });
+        }
+    }
+
     useEffect(() => {
 
         getChannelsList()
@@ -555,7 +574,7 @@ export default function Slack({ notify, updateNotification, setNotification }){
 
         setNotification(false)
 
-        
+        notifyBrowser()
         
        
     }, [])
