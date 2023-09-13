@@ -10,6 +10,7 @@ import Meeting from "../Components/Meeting";
 import cellPhoneIcon from "../Images/cellPhoneicon.png" 
 import Menu from "../Components/Menu";
 import { useLocation, useNavigate } from "react-router-dom";
+import { getId } from "./CheckStudentId";
 
 
 export default function DashboardTutor({ notify, updateNotification, setNotification }){
@@ -66,6 +67,7 @@ export default function DashboardTutor({ notify, updateNotification, setNotifica
                         </div></a>
                 })
             }
+            
             {
                 dashboardData.ixlCredentials && <>
                     <hr></hr>
@@ -132,7 +134,10 @@ export default function DashboardTutor({ notify, updateNotification, setNotifica
             </div>
             </a>
 
-            
+            {
+                dashboardData.dashboardData && dashboardData.dashboardData[1] &&
+                <div className="dashboard-options">Id: {getId(dashboardData.dashboardData[1])}</div>
+            }
             </div>
             </div>
 

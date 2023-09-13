@@ -5,6 +5,11 @@ import "../CSS/Dashboard.css"
 import "../CSS/Login.css"
 import { useNavigate } from "react-router-dom"
 
+export function getId(studentEmailForId){
+    const hmac = crypto.HmacSHA1(studentEmailForId, "dskfrdsjgk");
+    const hash = hmac.toString(crypto.enc.Hex);
+    return hash.substring(0, 10)
+}
 
 export default function CheckStudentId({ notify, updateNotification, setNotification }){
 
@@ -12,11 +17,12 @@ export default function CheckStudentId({ notify, updateNotification, setNotifica
     const [ id, setId ] = useState("")
     const navigate = useNavigate()
 
+    
+
     function calculateId(e){
         e.preventDefault()
-        const hmac = crypto.HmacSHA1(studentEmail, "dskfrdsjgk");
-        const hash = hmac.toString(crypto.enc.Hex);
-        setId(hash.substring(0, 10));
+        
+        setId(getId(studentEmail));
     }
 
     useEffect(() => {

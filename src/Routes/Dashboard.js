@@ -13,6 +13,7 @@ import Loader from "../Components/Loader";
 import { useNavigate } from "react-router-dom";
 import cellPhoneIcon from "../Images/cellPhoneicon.png" 
 import ixlLogin from "../Images/ixlLogin.png"
+import { getId } from "./CheckStudentId";
 
 function Dashboard({ notify, updateNotification, setNotification }){
     
@@ -174,7 +175,9 @@ function Dashboard({ notify, updateNotification, setNotification }){
             <p>Session Recordings</p>
             </div>
             </a>
-
+            {
+                email && <div className="dashboard-options">Id: {getId(email)}</div>
+            }
             
             </div>
             </div>
