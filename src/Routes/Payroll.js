@@ -51,7 +51,7 @@ export default function Payroll({ notify, updateNotification, setNotification })
             const appointments = res.appointments
             for(let i = 0; i < appointments.length; i++){
                 if(appointments[i].labels && (appointments[i].labels[0].name === "Completed" || appointments[i].labels[0].name === "Canceled<24 h" || appointments[i].labels[0].name === "Excused Absence")){
-                    pay += (Number(appointments[i].duration) / Number(appointments[i].type.toLowerCase().includes("lala") ? 50 : (appointments[i].type.toLowerCase().includes("maple tutoring") ? 35 : 60))) * Number(appointments[i].category.toLowerCase().includes("person") ? 50 : 25)
+                    pay += (Number(appointments[i].duration) / Number(appointments[i].type.toLowerCase().includes("lala") ? 50 : (appointments[i].type.toLowerCase().includes("maple tutoring") ? 30 : 60))) * Number(appointments[i].category.toLowerCase().includes("person") ? 50 : appointments[i].type.toLowerCase().includes("maple tutoring") ? 15 : 25)
                 }
                 
             }

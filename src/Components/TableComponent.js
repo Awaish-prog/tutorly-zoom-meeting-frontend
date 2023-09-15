@@ -12,6 +12,8 @@ const TableComponent = ({ data }) => {
         }
     }
 
+    let srNo = 0
+
   return (
     <table className="custom-table">
       <thead>
@@ -28,22 +30,26 @@ const TableComponent = ({ data }) => {
         </tr>
       </thead>
       <tbody>
-        {data.map((item, index) => (
-          <tr key={index}>
-            <td>{index + 1}</td>
+        {data.map((item, index) => {
+          if(item.labels && (item.labels[0].name === "Completed" || item.labels[0].name === "Canceled<24 h" || item.labels[0].name === "Excused Absence")){
+            srNo += 1
+          }
+          
+          return item.labels && (item.labels[0].name === "Completed" || item.labels[0].name === "Canceled<24 h" || item.labels[0].name === "Excused Absence") && <tr key={index}>
+            <td>{srNo}</td>
             <td>{item.date}</td>
             <td>{item.type}</td>
             <td>{item.labels ? item.labels[0].name : "Scheduled"}</td>
             <td>{item.firstName + " " + item.lastName}</td>
             <td>{item.duration} minutes</td>
-            <td>{item.category.toLowerCase().includes("person") ? 50 : 25}</td>
+            <td>{item.category.toLowerCase().includes("person") ? 50 : item.type.toLowerCase().includes("maple tutoring") ? 15 : 25}</td>
             <td>{item.type.toLowerCase().includes("lala") ? 50
-                : (item.type.toLowerCase().includes("maple tutoring") ? 35
+                : (item.type.toLowerCase().includes("maple tutoring") ? 30
                 : 60)
             } minutes</td>
-            <td>{((Number(item.duration) / Number(item.type.toLowerCase().includes("lala") ? 50 : (item.type.toLowerCase().includes("maple tutoring") ? 35 : 60))) * Number(item.category.toLowerCase().includes("person") ? 50 : 25)).toFixed(2) }</td>
+            <td>{((Number(item.duration) / Number(item.type.toLowerCase().includes("lala") ? 50 : (item.type.toLowerCase().includes("maple tutoring") ? 30 : 60))) * Number(item.category.toLowerCase().includes("person") ? 50 : item.type.toLowerCase().includes("maple tutoring") ? 15 : 25)).toFixed(2) }</td>
           </tr>
-        ))}
+      })}
       </tbody>
     </table>
   );
